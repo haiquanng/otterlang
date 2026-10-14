@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { mockApi, testUser } from './mockApi'
+import { greeting, mockApi, testUser } from './mockApi'
 
 test('redirects to sign-in, signs in, returns to the page, signs out', async ({ page }) => {
   await mockApi(page, { signedIn: false })
@@ -24,5 +24,5 @@ test('redirects to sign-in, signs in, returns to the page, signs out', async ({ 
 test('a valid refresh cookie skips the sign-in screen', async ({ page }) => {
   await mockApi(page, { signedIn: true })
   await page.goto('/sign-in')
-  await expect(page.getByRole('heading', { name: 'Today' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: greeting })).toBeVisible()
 })
