@@ -6,7 +6,17 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
 from app.db import create_pool
-from app.routers import auth, candidates, health, items, known_words, me, review, sources
+from app.routers import (
+    auth,
+    candidates,
+    health,
+    items,
+    known_words,
+    me,
+    review,
+    sources,
+    today,
+)
 
 
 @asynccontextmanager
@@ -37,6 +47,7 @@ def create_app() -> FastAPI:
     app.include_router(known_words.router)
     app.include_router(items.router)
     app.include_router(review.router)
+    app.include_router(today.router)
     return app
 
 
