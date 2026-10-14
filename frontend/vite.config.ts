@@ -10,7 +10,7 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon-180x180.png'],
+      includeAssets: ['favicon.png', 'logo.png', 'apple-touch-icon-180x180.png'],
       // API calls go through the same origin (/api, proxied by Vercel); never answer them
       // with the cached app shell.
       // push-sw.js adds the reminder notification handlers to the generated worker.

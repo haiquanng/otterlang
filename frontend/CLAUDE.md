@@ -8,7 +8,7 @@ Loaded when working under `frontend/`. Root `CLAUDE.md`, `.claude/rules/` and `.
 - Typecheck: `npm run typecheck`
 - Lint: `npm run lint` (oxlint)
 - Unit tests: `npm test` (Vitest)
-- PWA icons from `public/favicon.svg`: `npm run pwa-assets`
+- Logo and icons are made by the owner, never generated or upscaled. Files in `public/`: `logo.png` (128×128), `favicon.png` (48×48), `apple-touch-icon-180x180.png`, `pwa-64x64.png`, `pwa-192x192.png`, `pwa-512x512.png`, `maskable-icon-512x512.png`
 
 ## Layout
 - `src/App.tsx` router and query client
