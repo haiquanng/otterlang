@@ -7,6 +7,14 @@ export const en = {
     delete: 'Delete',
     optional: 'optional',
   },
+  errors: {
+    notFoundTitle: 'Page not found',
+    notFoundBody: 'This page does not exist. It may have been moved or the link is wrong.',
+    crashTitle: 'Something went wrong',
+    crashBody: 'The app hit an unexpected error. Reloading usually fixes it.',
+    goHome: 'Go to Today',
+    reload: 'Reload',
+  },
   kinds: {
     tech_blog: 'Tech blog',
     ielts: 'IELTS',
