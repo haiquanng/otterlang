@@ -18,8 +18,8 @@ export default defineConfig({
         name: 'OtterLang',
         short_name: 'OtterLang',
         description: 'Learn English from real content.',
-        theme_color: '#fbf8f3',
-        background_color: '#fbf8f3',
+        theme_color: '#f3eee5',
+        background_color: '#f3eee5',
         display: 'standalone',
         start_url: '/',
         icons: [
@@ -38,5 +38,7 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['src/**/*.test.{ts,tsx}'],
     setupFiles: ['./src/test-setup.ts'],
+    // Vitest blanks CSS by default; the contrast test reads the real design tokens.
+    css: { include: [/index\.css/] },
   },
 })
