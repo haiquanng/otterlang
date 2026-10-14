@@ -4,7 +4,8 @@ services:
     runtime: python
     plan: free
     rootDir: backend
-    buildCommand: pip install -r requirements.txt
+    # Migrations run on every deploy (idempotent), so code never ships ahead of its schema.
+    buildCommand: pip install -r requirements.txt && python -m scripts.migrate
     # Proxy headers so request.client is the real visitor IP (rate limiting), not Render's proxy.
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips='*'
     healthCheckPath: /health
