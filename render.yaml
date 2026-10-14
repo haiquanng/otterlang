@@ -17,10 +17,13 @@ services:
         generateValue: true
       - key: CORS_ORIGINS
         sync: false
+      # The browser talks to Vercel's /api proxy, so the cookie is first-party: lax is enough.
       - key: COOKIE_SECURE
         value: "true"
       - key: COOKIE_SAMESITE
-        value: none
+        value: lax
+      - key: COOKIE_PATH
+        value: /api/auth
       - key: SIGNUP_ENABLED
         value: "false"
       - key: AI_ENABLED

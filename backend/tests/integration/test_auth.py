@@ -34,6 +34,16 @@ def test_signup_returns_token_and_sets_refresh_cookie(client: TestClient) -> Non
     assert "Path=/auth" in cookie
 
 
+def test_cookie_path_follows_settings_for_the_vercel_proxy(
+    client: TestClient, settings: Settings
+) -> None:
+    # In production the browser calls /api/auth/* on the Vercel domain, which proxies to us.
+    settings.cookie_path = "/api/auth"
+    response = client.post("/auth/signup", json={"email": EMAIL, "password": PASSWORD})
+    assert "Path=/api/auth" in response.headers["set-cookie"]
+    assert "Path=/api/auth" in client.post("/auth/logout").headers["set-cookie"]
+
+
 def test_duplicate_email_is_rejected_case_insensitively(client: TestClient) -> None:
     _signup(client)
     response = client.post("/auth/signup", json={"email": EMAIL.upper(), "password": PASSWORD})

@@ -11,6 +11,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'apple-touch-icon-180x180.png'],
+      // API calls go through the same origin (/api, proxied by Vercel); never answer them
+      // with the cached app shell.
+      workbox: { navigateFallbackDenylist: [/^\/api\//] },
       manifest: {
         name: 'OtterLang',
         short_name: 'OtterLang',
