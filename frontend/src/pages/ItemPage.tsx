@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Archive, ArrowLeft, Trash2 } from 'lucide-react'
 import { Link, useNavigate, useParams } from 'react-router'
+import { useState } from 'react'
 import { Button } from '@/components/Button'
+import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { ErrorState } from '@/components/ErrorState'
 import { HighlightedSentence } from '@/components/HighlightedSentence'
 import { ItemEditor } from '@/components/ItemEditor'
@@ -14,6 +16,7 @@ export function ItemPage() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const query = useQuery({ queryKey: ['items', id], queryFn: () => getItem(id) })
+  const [confirming, setConfirming] = useState<'archive' | 'delete' | null>(null)
 
   const leave = async () => {
     await queryClient.invalidateQueries({ queryKey: ['items'] })
@@ -81,14 +84,33 @@ export function ItemPage() {
       <ItemEditor key={item.id} item={item} />
 
       <footer className="mt-10 flex flex-wrap gap-2 border-t border-line pt-6">
-        <Button variant="secondary" loading={archive.isPending} onClick={() => archive.mutate()}>
+        <Button variant="secondary" onClick={() => setConfirming('archive')}>
           <Archive className="size-4" aria-hidden />
           {en.item.archive}
         </Button>
-        <Button variant="danger" loading={remove.isPending} onClick={() => window.confirm(en.item.deleteConfirm) && remove.mutate()}>
+        <Button variant="danger" onClick={() => setConfirming('delete')}>
           <Trash2 className="size-4" aria-hidden />
           {en.common.delete}
         </Button>
+        <ConfirmDialog
+          open={confirming === 'archive'}
+          onOpenChange={(open) => setConfirming(open ? 'archive' : null)}
+          title={en.item.archiveTitle(item.term)}
+          description={en.item.archiveBody}
+          confirmLabel={en.item.archive}
+          loading={archive.isPending}
+          onConfirm={() => archive.mutate()}
+        />
+        <ConfirmDialog
+          open={confirming === 'delete'}
+          onOpenChange={(open) => setConfirming(open ? 'delete' : null)}
+          title={en.item.deleteTitle(item.term)}
+          description={en.item.deleteBody}
+          confirmLabel={en.common.delete}
+          tone="danger"
+          loading={remove.isPending}
+          onConfirm={() => remove.mutate()}
+        />
       </footer>
     </article>
   )
