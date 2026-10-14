@@ -43,3 +43,14 @@ export const sourceSchema = z.object({
 export type Source = z.infer<typeof sourceSchema>
 
 export type SourceInput = Pick<Source, 'title' | 'kind' | 'body'> & { url: string }
+
+export const candidateSchema = z.object({
+  lemma: z.string(),
+  surface: z.string(),
+  sentence: z.string(),
+  rank: z.number().int().nullable(),
+  count: z.number().int(),
+})
+export type Candidate = z.infer<typeof candidateSchema>
+
+export const addedSchema = z.object({ added: z.number().int() })

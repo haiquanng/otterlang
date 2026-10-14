@@ -1,6 +1,8 @@
 import { z } from 'zod'
 import { request } from '@/lib/http'
 import {
+  addedSchema,
+  candidateSchema,
   healthSchema,
   sourceSchema,
   sourceSummarySchema,
@@ -54,4 +56,20 @@ export function createSource(input: SourceInput) {
 
 export function deleteSource(id: string) {
   return request(`/sources/${encodeURIComponent(id)}`, z.undefined(), { method: 'DELETE' })
+}
+
+export function listCandidates(sourceId: string) {
+  return request(`/sources/${encodeURIComponent(sourceId)}/candidates`, z.array(candidateSchema))
+}
+
+export function markKnown(lemma: string) {
+  return request('/known-words', addedSchema, { method: 'POST', body: { lemma } })
+}
+
+export function markKnownBulk(lemmas: string[]) {
+  return request('/known-words/bulk', addedSchema, { method: 'POST', body: { lemmas } })
+}
+
+export function unmarkKnown(lemma: string) {
+  return request(`/known-words/${encodeURIComponent(lemma)}`, z.undefined(), { method: 'DELETE' })
 }
