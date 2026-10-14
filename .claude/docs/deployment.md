@@ -38,6 +38,22 @@ cron-job.org → new job → `GET https://<service>.onrender.com/health` every 1
 - Add a document, learn a word, wait a few seconds: the definition appears in the Library.
 - Settings → Server shows Online.
 
+## 6. CI/CD
+
+```
+PR ──► CI: lint · types · unit · backend integration (Postgres) · e2e (Playwright)
+merge to main ──► Render and Vercel auto-deploy (their own Git triggers)
+                  Render build: pip install → migrate → start
+```
+
+- **CI** (`.github/workflows/ci.yml`) only runs the jobs for the part of the repo that changed.
+- **Deploys** use Render's and Vercel's built-in auto-deploy on `main`; there is no extra gate.
+- **Migrations** run in Render's build step (a few seconds, idempotent), so code never starts before its schema exists. A failing migration fails the build and the old version keeps serving.
+
+### Render setting (once)
+Your service was created by hand, so set **Build Command** to
+`pip install -r requirements.txt && python -m scripts.migrate`.
+
 ## Notes
 - First request after a long idle can take ~1 minute (Render cold start); the app shows a "waking up" state.
 - `SIGNUP_ENABLED=false` until friends are invited; create accounts with `scripts.create_user`.
