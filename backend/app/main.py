@@ -1,13 +1,27 @@
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
-from app.routers import health
+from app.db import create_pool
+from app.routers import auth, health, me
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+    pool = create_pool(get_settings().database_url)
+    # wait=False: a slow database must not block startup, or /health would fail too.
+    pool.open(wait=False)
+    app.state.pool = pool
+    yield
+    pool.close()
 
 
 def create_app() -> FastAPI:
     settings = get_settings()
-    app = FastAPI(title="OtterLang API")
+    app = FastAPI(title="OtterLang API", lifespan=lifespan)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origin_list,
@@ -16,6 +30,8 @@ def create_app() -> FastAPI:
         allow_headers=["*"],
     )
     app.include_router(health.router)
+    app.include_router(auth.router)
+    app.include_router(me.router)
     return app
 
 
