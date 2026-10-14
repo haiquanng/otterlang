@@ -70,7 +70,7 @@ export function DocumentPage() {
         </div>
         <Link
           to={`/documents/${source.id}/words`}
-          className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xl bg-river px-4 text-sm font-semibold text-white shadow-sm hover:opacity-90"
+          className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xl bg-river px-4 text-sm font-semibold text-on-river shadow-sm hover:opacity-90"
         >
           <Sparkles className="size-4" aria-hidden />
           {en.documents.pickWords}

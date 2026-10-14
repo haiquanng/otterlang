@@ -17,7 +17,7 @@ export function RouteError() {
       <div className="flex gap-2">
         <Link
           to="/"
-          className="inline-flex min-h-11 items-center rounded-xl bg-river px-5 text-sm font-semibold text-white shadow-sm hover:opacity-90"
+          className="inline-flex min-h-11 items-center rounded-xl bg-river px-5 text-sm font-semibold text-on-river shadow-sm hover:opacity-90"
         >
           {en.errors.goHome}
         </Link>

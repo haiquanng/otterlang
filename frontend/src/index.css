@@ -2,8 +2,14 @@
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/literata';
 
-/* Tokens are CSS variables so a future theme switch only redefines them. */
+/*
+ * Tokens are CSS variables; a theme only redefines them.
+ * <html data-theme="light|dark"> is an explicit choice; without it the OS decides.
+ * The dark block is repeated because CSS cannot share one rule between a media query
+ * and an attribute selector.
+ */
 :root {
+  color-scheme: light;
   --color-paper: #fbf8f3;
   --color-surface: #ffffff;
   --color-ink: #1f2328;
@@ -11,13 +17,31 @@
   --color-line: #ece6dc;
   --color-river: #0e7c7b;
   --color-river-soft: #e3f2f1;
+  --color-on-river: #ffffff;
   --color-otter: #8b5e3c;
   --color-otter-soft: #f3e6d6;
   --color-danger: #b42318;
 }
 
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-paper: #15171a;
+  --color-surface: #1d2024;
+  --color-ink: #ecebe8;
+  --color-muted: #9a9ea5;
+  --color-line: #2c3036;
+  --color-river: #3fb8b6;
+  --color-river-soft: #17393a;
+  /* Dark text on the bright dark-mode teal: white on it is only ~2:1 contrast. */
+  --color-on-river: #0b1f1f;
+  --color-otter: #d0a27f;
+  --color-otter-soft: #3a2c22;
+  --color-danger: #f97066;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
     --color-paper: #15171a;
     --color-surface: #1d2024;
     --color-ink: #ecebe8;
@@ -25,6 +49,7 @@
     --color-line: #2c3036;
     --color-river: #3fb8b6;
     --color-river-soft: #17393a;
+    --color-on-river: #0b1f1f;
     --color-otter: #d0a27f;
     --color-otter-soft: #3a2c22;
     --color-danger: #f97066;
@@ -39,6 +64,7 @@
   --color-line: var(--color-line);
   --color-river: var(--color-river);
   --color-river-soft: var(--color-river-soft);
+  --color-on-river: var(--color-on-river);
   --color-otter: var(--color-otter);
   --color-otter-soft: var(--color-otter-soft);
   --color-danger: var(--color-danger);

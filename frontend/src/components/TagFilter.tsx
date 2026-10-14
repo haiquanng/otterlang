@@ -25,7 +25,7 @@ export function TagFilter({ value, onChange }: Props) {
             className={[
               'min-h-9 shrink-0 rounded-full border px-4 text-sm font-medium transition-colors',
               'focus-visible:outline-2 focus-visible:outline-river',
-              active ? 'border-river bg-river text-white' : 'border-line bg-surface text-muted hover:text-ink',
+              active ? 'border-river bg-river text-on-river' : 'border-line bg-surface text-muted hover:text-ink',
             ].join(' ')}
           >
             {label}

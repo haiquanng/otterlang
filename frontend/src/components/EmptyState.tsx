@@ -19,7 +19,7 @@ export function EmptyState({ icon: Icon, title, body, action }: Props) {
       {action ? (
         <Link
           to={action.to}
-          className="mt-6 inline-flex min-h-11 items-center rounded-xl bg-river px-5 text-sm font-semibold text-white shadow-sm hover:opacity-90"
+          className="mt-6 inline-flex min-h-11 items-center rounded-xl bg-river px-5 text-sm font-semibold text-on-river shadow-sm hover:opacity-90"
         >
           {action.label}
         </Link>

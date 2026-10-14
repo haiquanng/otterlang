@@ -1,6 +1,7 @@
 import { AccountCard } from '@/components/AccountCard'
 import { PageHeader } from '@/components/PageHeader'
 import { ServerStatus } from '@/components/ServerStatus'
+import { ThemePicker } from '@/components/ThemePicker'
 import { en } from '@/i18n/en'
 
 export function SettingsPage() {
@@ -9,6 +10,7 @@ export function SettingsPage() {
       <PageHeader title={en.settings.title} />
       <div className="space-y-3">
         <AccountCard />
+        <ThemePicker />
         <ServerStatus />
       </div>
     </>

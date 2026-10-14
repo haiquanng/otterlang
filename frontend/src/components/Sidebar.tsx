@@ -16,7 +16,7 @@ export function Sidebar() {
         <NavLink
           key={to}
           to={to}
-          className="mb-4 flex min-h-11 items-center justify-center gap-2 rounded-xl bg-river px-3 text-sm font-semibold text-white shadow-sm transition-opacity hover:opacity-90"
+          className="mb-4 flex min-h-11 items-center justify-center gap-2 rounded-xl bg-river px-3 text-sm font-semibold text-on-river shadow-sm transition-opacity hover:opacity-90"
         >
           <Icon className="size-5" aria-hidden />
           {label}
