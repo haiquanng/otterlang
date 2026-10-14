@@ -13,6 +13,7 @@ import {
   type ItemInput,
   type ItemUpdate,
   type SourceInput,
+  type SourceKind,
   type User,
 } from '@/lib/schemas'
 import { clearSession, setSession } from '@/lib/session'
@@ -52,6 +53,10 @@ export function getSource(id: string) {
 
 export function createSource(input: SourceInput) {
   return request('/sources', sourceSchema, { method: 'POST', body: input })
+}
+
+export function importSource(url: string, kind: SourceKind) {
+  return request('/sources/import', sourceSchema, { method: 'POST', body: { url, kind } })
 }
 
 export function deleteSource(id: string) {
