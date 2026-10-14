@@ -3,7 +3,7 @@ export type ThemeChoice = (typeof themeChoices)[number]
 
 // Keep in sync with the inline script in index.html.
 const STORAGE_KEY = 'otter-theme'
-const THEME_COLOR = { light: '#fbf8f3', dark: '#15171a' } as const
+const THEME_COLOR = { light: '#f3eee5', dark: '#15171a' } as const
 const DARK_QUERY = '(prefers-color-scheme: dark)'
 
 function isChoice(value: unknown): value is ThemeChoice {

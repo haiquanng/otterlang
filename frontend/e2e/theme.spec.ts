@@ -15,12 +15,12 @@ test('switch theme, survive a reload, and go back to the system setting', async 
 
   await page.getByRole('radio', { name: 'Light' }).click()
   await expect(html).toHaveAttribute('data-theme', 'light')
-  expect(await paper()).toBe('rgb(251, 248, 243)')
+  expect(await paper()).toBe('rgb(243, 238, 229)')
 
   await page.reload()
   await expect(html).toHaveAttribute('data-theme', 'light')
   await expect(page.getByRole('radio', { name: 'Light' })).toHaveAttribute('aria-checked', 'true')
-  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#fbf8f3')
+  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute('content', '#f3eee5')
 
   await page.getByRole('radio', { name: 'System' }).click()
   await expect(html).not.toHaveAttribute('data-theme')
