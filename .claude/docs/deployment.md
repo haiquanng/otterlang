@@ -41,23 +41,18 @@ cron-job.org → new job → `GET https://<service>.onrender.com/health` every 1
 ## 6. CI/CD
 
 ```
-PR opened ──► CI: lint · types · unit · backend integration (Postgres) · e2e (Playwright)
-                │  branch protection: merge only when green
-merge to main ──┼──► Render: waits for CI ✓ → pip install → migrate → start
-                └──► Vercel: build (VITE_API_URL=/api) → promote to otterlang.vercel.app
-                         └──► GitHub "deployment success" ──► Smoke test workflow
+PR ──► CI: lint · types · unit · backend integration (Postgres) · e2e (Playwright)
+merge to main ──► Render and Vercel auto-deploy (their own Git triggers)
+                  Render build: pip install → migrate → start
 ```
 
-- **CI** (`.github/workflows/ci.yml`): jobs run only for the part of the repo that changed. A skipped job counts as passed for branch protection.
-- **Migrations** run in Render's build step on every deploy. They are idempotent and additive, so a deploy never starts code that expects a column the database does not have yet. If a migration fails, the build fails and the old version keeps serving.
-- **Smoke test** (`.github/workflows/smoke.yml`): app shell, SPA fallback, `/api/health` through the proxy (waits up to ~2 min for a Render cold start), and `/api/me` returns 401. Run it by hand from the Actions tab any time. Set the repo variable `PRODUCTION_URL` if the domain changes.
+- **CI** (`.github/workflows/ci.yml`) only runs the jobs for the part of the repo that changed.
+- **Deploys** use Render's and Vercel's built-in auto-deploy on `main`; there is no extra gate.
+- **Migrations** run in Render's build step (a few seconds, idempotent), so code never starts before its schema exists. A failing migration fails the build and the old version keeps serving.
 
-### Dashboard settings (once)
-1. **GitHub → Settings → Branches → Add rule** for `main`: *Require a pull request before merging*, *Require status checks to pass* and pick `frontend`, `e2e`, `backend` (they appear after one CI run). Also tick *Automatically delete head branches* under Settings → General.
-2. **Render → otterlang-api → Settings:**
-   - Build Command: `pip install -r requirements.txt && python -m scripts.migrate`
-   - Auto-Deploy: **After CI Checks Pass**
-3. **Vercel:** nothing; it deploys `main` and reports the deployment to GitHub, which triggers the smoke test.
+### Render setting (once)
+Your service was created by hand, so set **Build Command** to
+`pip install -r requirements.txt && python -m scripts.migrate`.
 
 ## Notes
 - First request after a long idle can take ~1 minute (Render cold start); the app shows a "waking up" state.
