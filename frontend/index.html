@@ -8,6 +8,16 @@
     <meta name="theme-color" content="#fbf8f3" />
     <meta name="description" content="Learn English from real content." />
     <title>OtterLang</title>
+    <script>
+      // Runs before first paint so a saved theme never flashes the other one.
+      // Keep in sync with src/lib/theme.ts (key and colors).
+      try {
+        var choice = localStorage.getItem('otter-theme')
+        var dark = choice === 'dark' || (choice !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches)
+        if (choice === 'light' || choice === 'dark') document.documentElement.dataset.theme = choice
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#15171a' : '#fbf8f3')
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>
