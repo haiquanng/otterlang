@@ -14,6 +14,7 @@ from app.routers import (
     known_words,
     library_documents,
     me,
+    reading,
     review,
     sources,
     today,
@@ -48,6 +49,7 @@ def create_app() -> FastAPI:
     app.include_router(known_words.router)
     app.include_router(items.router)
     app.include_router(library_documents.router)
+    app.include_router(reading.router)
     app.include_router(review.router)
     app.include_router(today.router)
     return app

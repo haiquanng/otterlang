@@ -150,6 +150,12 @@ export const en = {
     saveError: "Couldn't save. Your text is still here, try again.",
     browseStarter: 'Nothing to paste? Browse the starter library',
   },
+  reading: {
+    hint: 'Tap any word to see its meaning and save it.',
+    noDefinition: 'No definition found. Try Cambridge below.',
+    inLibrary: 'In your library',
+    known: 'You know this word',
+  },
   starter: {
     title: 'Starter library',
     body: 'Ready-made texts on technical and IELTS topics. Open one and pick the words you want to learn.',
