@@ -1,6 +1,14 @@
 import { z } from 'zod'
 import { request } from '@/lib/http'
-import { healthSchema, tokenSchema, userSchema, type User } from '@/lib/schemas'
+import {
+  healthSchema,
+  sourceSchema,
+  sourceSummarySchema,
+  tokenSchema,
+  userSchema,
+  type SourceInput,
+  type User,
+} from '@/lib/schemas'
 import { clearSession, setSession } from '@/lib/session'
 
 export { ApiError, refreshSession } from '@/lib/http'
@@ -30,4 +38,20 @@ export async function signOut(): Promise<void> {
 
 export function getMe() {
   return request('/me', userSchema)
+}
+
+export function listSources() {
+  return request('/sources', z.array(sourceSummarySchema))
+}
+
+export function getSource(id: string) {
+  return request(`/sources/${encodeURIComponent(id)}`, sourceSchema)
+}
+
+export function createSource(input: SourceInput) {
+  return request('/sources', sourceSchema, { method: 'POST', body: input })
+}
+
+export function deleteSource(id: string) {
+  return request(`/sources/${encodeURIComponent(id)}`, z.undefined(), { method: 'DELETE' })
 }
