@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test'
+import { mockApi } from './mockApi'
 
 test('navigates between the main sections', async ({ page }) => {
+  await mockApi(page, { signedIn: true })
   await page.goto('/')
   await expect(page.getByRole('heading', { name: 'Today' })).toBeVisible()
 
