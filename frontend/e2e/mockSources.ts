@@ -35,4 +35,5 @@ export async function mockSources(page: Page) {
     }
     return route.fulfill({ json: sources[index] })
   })
+  return sources
 }

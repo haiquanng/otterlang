@@ -10,11 +10,11 @@ async function mockToday(page: Page, data: Record<string, unknown>) {
   )
 }
 
-test('new learner is pointed at adding a document', async ({ page }) => {
+test('new learner can also paste their own text', async ({ page }) => {
   await mockApi(page, { signedIn: true })
   await page.goto('/')
   await expect(page.getByRole('heading', { name: greeting })).toContainText('Otter')
-  await page.getByRole('link', { name: 'Add a document' }).click()
+  await page.getByRole('link', { name: 'Paste my own text' }).click()
   await expect(page.getByRole('heading', { name: 'Add a document' })).toBeVisible()
 })
 

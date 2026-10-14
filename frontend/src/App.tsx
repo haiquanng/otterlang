@@ -14,6 +14,7 @@ import { PickWordsPage } from '@/pages/PickWordsPage'
 import { ReviewPage } from '@/pages/ReviewPage'
 import { SettingsPage } from '@/pages/SettingsPage'
 import { SignInPage } from '@/pages/SignInPage'
+import { StarterLibraryPage } from '@/pages/StarterLibraryPage'
 import { TodayPage } from '@/pages/TodayPage'
 
 const queryClient = new QueryClient({
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
               { path: 'documents', element: <DocumentsPage /> },
               { path: 'documents/:id', element: <DocumentPage /> },
               { path: 'documents/:id/words', element: <PickWordsPage /> },
+              { path: 'starter', element: <StarterLibraryPage /> },
               { path: 'settings', element: <SettingsPage /> },
               { path: '*', element: <NotFoundPage /> },
             ],

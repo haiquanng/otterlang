@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import { DocumentCard } from '@/components/DocumentCard'
 import { ErrorState } from '@/components/ErrorState'
 import { QuickAdd } from '@/components/QuickAdd'
+import { StarterLibrary } from '@/components/StarterLibrary'
 import { TodayHero } from '@/components/TodayHero'
 import { useSession } from '@/hooks/useSession'
 import { en } from '@/i18n/en'
@@ -41,6 +42,9 @@ export function TodayPage() {
       ) : (
         <div className="space-y-8">
           <TodayHero today={query.data} />
+
+          {/* A new learner needs something to read before anything else makes sense. */}
+          {query.data.recent_documents.length === 0 ? <StarterLibrary limit={4} /> : null}
 
           {query.data.total_words > 0 ? (
             <div className="grid grid-cols-2 gap-3">

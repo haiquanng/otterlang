@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { BookOpenText } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { Button } from '@/components/Button'
 import { KindPicker } from '@/components/KindPicker'
 import { PageHeader } from '@/components/PageHeader'
@@ -38,6 +39,10 @@ export function AddPage() {
   return (
     <>
       <PageHeader title={en.add.title} body={en.add.body} />
+      <Link to="/starter" className="mb-6 -mt-2 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-river hover:underline">
+        <BookOpenText className="size-4" aria-hidden />
+        {en.add.browseStarter}
+      </Link>
       <form onSubmit={onSubmit} className="space-y-5">
         <TextField
           label={en.add.titleLabel}

@@ -4,6 +4,7 @@ import { DocumentCard } from '@/components/DocumentCard'
 import { EmptyState } from '@/components/EmptyState'
 import { ErrorState } from '@/components/ErrorState'
 import { PageHeader } from '@/components/PageHeader'
+import { StarterLibrary } from '@/components/StarterLibrary'
 import { en } from '@/i18n/en'
 import { listSources } from '@/lib/api'
 
@@ -22,12 +23,15 @@ export function DocumentsPage() {
       ) : query.isError ? (
         <ErrorState onRetry={() => void query.refetch()} />
       ) : query.data.length === 0 ? (
-        <EmptyState
-          icon={FileText}
-          title={en.documents.emptyTitle}
-          body={en.documents.emptyBody}
-          action={{ to: '/add', label: en.documents.emptyAction }}
-        />
+        <div className="space-y-8">
+          <EmptyState
+            icon={FileText}
+            title={en.documents.emptyTitle}
+            body={en.documents.emptyBody}
+            action={{ to: '/add', label: en.documents.emptyAction }}
+          />
+          <StarterLibrary limit={4} />
+        </div>
       ) : (
         <ul className="space-y-3">
           {query.data.map((source) => (
