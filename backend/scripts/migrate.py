@@ -19,6 +19,7 @@ def main() -> None:
             "create table if not exists schema_migrations ("
             "name text primary key, applied_at timestamptz not null default now())"
         )
+        conn.execute("alter table schema_migrations enable row level security")
         applied = {row[0] for row in conn.execute("select name from schema_migrations")}
         pending = [p for p in sorted(MIGRATIONS_DIR.glob("*.sql")) if p.name not in applied]
         for path in pending:
