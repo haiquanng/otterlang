@@ -10,3 +10,4 @@ wordfreq==3.1.1
 lemminflect==0.2.3
 fsrs==6.3.2
 certifi==2026.7.22
+trafilatura==2.3.1

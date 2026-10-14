@@ -15,6 +15,7 @@ from psycopg.rows import dict_row
 
 from app.config import get_settings
 from app.repositories import library_documents
+from app.services.web_fetch import PageUnavailableError
 from scripts.library_sources import fetch_url, fetch_wikipedia
 
 SEED_FILE = Path(__file__).with_name("seed_library.json")
@@ -56,7 +57,7 @@ def main() -> None:
                     license_name=license_name,
                 )
                 conn.commit()
-            except (OSError, ValueError, LookupError, KeyError) as exc:
+            except (PageUnavailableError, OSError, ValueError, LookupError, KeyError) as exc:
                 conn.rollback()
                 print(f"fail {key}: {exc}", file=sys.stderr)
                 failed += 1

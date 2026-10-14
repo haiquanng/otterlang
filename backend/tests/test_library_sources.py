@@ -1,4 +1,5 @@
-from scripts.library_sources import clean_wikipedia_extract, is_public_http_url, trim_to_paragraphs
+from app.services.web_fetch import is_public_http_url, trim_to_paragraphs
+from scripts.library_sources import clean_wikipedia_extract
 
 EXTRACT = """Caching stores data so future requests are faster.
 It is used everywhere.
