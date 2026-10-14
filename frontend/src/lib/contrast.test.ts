@@ -34,6 +34,7 @@ const pairs: [string, string, number][] = [
   ['on-river', 'river', 4.5],
   ['otter', 'otter-soft', 4.5],
   ['danger', 'surface', 4.5],
+  ['on-danger', 'danger', 4.5],
 ]
 
 describe.each([

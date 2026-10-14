@@ -1,7 +1,7 @@
 import { LoaderCircle } from 'lucide-react'
 import type { ButtonHTMLAttributes } from 'react'
 
-type Variant = 'primary' | 'secondary' | 'danger'
+type Variant = 'primary' | 'secondary' | 'danger' | 'danger-solid'
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: Variant
@@ -12,6 +12,8 @@ const variants: Record<Variant, string> = {
   primary: 'bg-river text-on-river shadow-sm hover:opacity-90',
   secondary: 'border border-line bg-surface text-ink hover:bg-paper',
   danger: 'border border-line bg-surface text-danger hover:bg-paper',
+  // The final "yes, delete" in a confirm dialog.
+  'danger-solid': 'bg-danger text-on-danger shadow-sm hover:opacity-90',
 }
 
 export function Button({ variant = 'primary', loading = false, disabled, className = '', children, ...rest }: Props) {
