@@ -12,6 +12,9 @@ class UserOut(BaseModel):
     display_name: str | None
     skip_top_n: int
     daily_goal: int
+    reminder_enabled: bool
+    reminder_hour: int
+    timezone: str
 
     @classmethod
     def from_user(cls, user: User) -> "UserOut":
@@ -21,6 +24,9 @@ class UserOut(BaseModel):
             display_name=user.display_name,
             skip_top_n=user.skip_top_n,
             daily_goal=user.daily_goal,
+            reminder_enabled=user.reminder_enabled,
+            reminder_hour=user.reminder_hour,
+            timezone=user.timezone,
         )
 
 
@@ -45,3 +51,6 @@ class MeUpdate(BaseModel):
     display_name: str | None = Field(default=None, max_length=80)
     skip_top_n: int | None = Field(default=None, ge=0, le=50_000)
     daily_goal: int | None = Field(default=None, ge=1, le=200)
+    reminder_enabled: bool | None = None
+    reminder_hour: int | None = Field(default=None, ge=0, le=23)
+    timezone: str | None = Field(default=None, max_length=64)
