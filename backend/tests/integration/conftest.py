@@ -6,9 +6,10 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app.config import Settings, get_settings
-from app.db import Pool, create_pool, get_conn
+from app.db import Pool, create_pool, get_pool
 from app.main import app
 from app.routers import auth
+from app.services.dictionary import DictionaryEntry, get_dictionary_fetch
 from scripts.migrate import apply_migrations
 
 TEST_DATABASE_URL = os.environ.get("TEST_DATABASE_URL")
@@ -16,6 +17,18 @@ TEST_DATABASE_URL = os.environ.get("TEST_DATABASE_URL")
 # Never fall back to DATABASE_URL: that may be the real Supabase database.
 if not TEST_DATABASE_URL:
     pytest.skip("TEST_DATABASE_URL not set", allow_module_level=True)
+
+
+class FakeDictionary:
+    """Stands in for dictionaryapi.dev; tests never hit the network."""
+
+    def __init__(self) -> None:
+        self.entries: dict[str, DictionaryEntry] = {}
+        self.calls: list[str] = []
+
+    def __call__(self, lemma: str) -> DictionaryEntry | None:
+        self.calls.append(lemma)
+        return self.entries.get(lemma)
 
 
 @pytest.fixture(scope="session")
@@ -43,18 +56,20 @@ def settings() -> Settings:
 
 
 @pytest.fixture
-def client(pool: Pool, settings: Settings) -> Iterator[TestClient]:
+def dictionary() -> FakeDictionary:
+    return FakeDictionary()
+
+
+@pytest.fixture
+def client(pool: Pool, settings: Settings, dictionary: FakeDictionary) -> Iterator[TestClient]:
     with pool.connection() as conn:
         conn.execute("truncate users, dictionary_entries cascade")
     for limiter in (auth.login_limiter_ip, auth.login_limiter_email, auth.signup_limiter_ip):
         limiter.clear()
 
-    def test_conn() -> Iterator[psycopg.Connection[psycopg.rows.DictRow]]:
-        with pool.connection() as conn:
-            yield conn
-
-    app.dependency_overrides[get_conn] = test_conn
+    app.dependency_overrides[get_pool] = lambda: pool
     app.dependency_overrides[get_settings] = lambda: settings
+    app.dependency_overrides[get_dictionary_fetch] = lambda: dictionary
     # No `with`: the app's lifespan would open a pool against DATABASE_URL.
     yield TestClient(app)
     app.dependency_overrides.clear()
