@@ -30,7 +30,7 @@ def _respond(response: Response, settings: Settings, session: auth.Session) -> T
         REFRESH_COOKIE,
         session.refresh_token,
         expires=session.refresh_expires_at,
-        path="/auth",
+        path=settings.cookie_path,
         httponly=True,
         secure=settings.cookie_secure,
         samesite=settings.cookie_samesite,
@@ -94,7 +94,7 @@ def logout(
         auth.logout(conn, otter_refresh)
     response.delete_cookie(
         REFRESH_COOKIE,
-        path="/auth",
+        path=settings.cookie_path,
         httponly=True,
         secure=settings.cookie_secure,
         samesite=settings.cookie_samesite,

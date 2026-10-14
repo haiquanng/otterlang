@@ -16,10 +16,12 @@ class Settings(BaseSettings):
     signup_enabled: bool = False
     # Comma-separated so it reads the same in Render's env UI and in .env.
     cors_origins: str = "http://localhost:5173"
-    # Production runs frontend (Vercel) and API (Render) on different sites,
-    # which needs SameSite=None + Secure for the refresh cookie.
+    # In production the browser reaches the API through Vercel's /api proxy, so the refresh
+    # cookie is first-party (Safari blocks third-party cookies). The path must then match
+    # what the browser sees: /api/auth. Locally the browser calls the API directly: /auth.
     cookie_secure: bool = True
     cookie_samesite: Literal["lax", "strict", "none"] = "lax"
+    cookie_path: str = "/auth"
     ai_enabled: bool = False
     gemini_api_key: str | None = None
 
