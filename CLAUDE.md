@@ -19,7 +19,7 @@ Personal English learning app for a Vietnamese software engineer (intermediate l
 - Auth: own email + password in FastAPI (argon2id, short-lived JWT, revocable refresh token).
 - Text processing: `trafilatura`, `wordfreq`, `lemminflect`. No large NLP models (512MB RAM).
 - Scheduling: FSRS.
-- Tests: pytest, Vitest, Playwright.
+- Tests: pytest and Vitest (logic only; UI is checked by hand).
 
 ## Layout (monorepo)
 - `frontend/` PWA. Has its own `CLAUDE.md` with commands.

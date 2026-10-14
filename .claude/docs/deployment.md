@@ -41,7 +41,7 @@ cron-job.org → new job → `GET https://<service>.onrender.com/health` every 1
 ## 6. CI/CD
 
 ```
-PR ──► CI: lint · types · unit · backend integration (Postgres) · e2e (Playwright)
+PR ──► CI: lint · types · unit · backend integration (Postgres)
 merge to main ──► Render and Vercel auto-deploy (their own Git triggers)
                   Render build: pip install → migrate → start
 ```
