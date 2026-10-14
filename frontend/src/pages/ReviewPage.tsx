@@ -49,7 +49,7 @@ export function ReviewPage() {
           <EmptyState icon={CalendarCheck} title={en.review.nothingTitle} body={en.review.nothingBody} action={{ to: '/library', label: en.review.nothingAction }} />
         ) : session.finished ? (
           <div className="flex flex-col items-center gap-4 text-center">
-            <EmptyState icon={PartyPopper} title={en.review.doneTitle} body={en.review.doneBody(total, session.correctCount)} action={{ to: '/', label: en.review.backToday }} />
+            <EmptyState icon={PartyPopper} animation="success" loop={false} title={en.review.doneTitle} body={en.review.doneBody(total, session.correctCount)} action={{ to: '/', label: en.review.backToday }} />
             <Button variant="secondary" onClick={() => void session.restart()}>
               {en.review.checkMore}
             </Button>

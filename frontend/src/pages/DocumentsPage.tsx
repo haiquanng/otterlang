@@ -39,6 +39,7 @@ export function DocumentsPage() {
         <div className="space-y-8">
           <EmptyState
             icon={FileText}
+            animation="search-file"
             title={en.documents.emptyTitle}
             body={en.documents.emptyBody}
             action={{ to: '/add', label: en.documents.emptyAction }}
