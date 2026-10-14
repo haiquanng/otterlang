@@ -5,6 +5,7 @@ export const userSchema = z.object({
   email: z.string(),
   display_name: z.string().nullable(),
   skip_top_n: z.number().int(),
+  daily_goal: z.number().int(),
 })
 export type User = z.infer<typeof userSchema>
 

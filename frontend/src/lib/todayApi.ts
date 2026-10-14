@@ -7,6 +7,10 @@ const todaySchema = z.object({
   due_later_today: z.number().int(),
   new_this_week: z.number().int(),
   total_words: z.number().int(),
+  mastered_words: z.number().int(),
+  reviewed_today: z.number().int(),
+  daily_goal: z.number().int(),
+  week: z.array(z.object({ day: z.string(), reviews: z.number().int() })),
   recent_documents: z.array(sourceSummarySchema),
 })
 export type Today = z.infer<typeof todaySchema>

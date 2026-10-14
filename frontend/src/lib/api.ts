@@ -43,6 +43,10 @@ export function getMe() {
   return request('/me', userSchema)
 }
 
+export function updateMe(update: { daily_goal?: number; display_name?: string | null }) {
+  return request('/me', userSchema, { method: 'PATCH', body: update })
+}
+
 export function listSources() {
   return request('/sources', z.array(sourceSummarySchema))
 }

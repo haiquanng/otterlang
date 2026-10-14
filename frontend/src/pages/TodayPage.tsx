@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Link } from 'react-router'
+import { DailyProgress } from '@/components/DailyProgress'
 import { DocumentCard } from '@/components/DocumentCard'
 import { ErrorState } from '@/components/ErrorState'
 import { QuickAdd } from '@/components/QuickAdd'
@@ -46,10 +47,14 @@ export function TodayPage() {
             <div className="space-y-6">
               <TodayHero today={query.data} />
               {query.data.total_words > 0 ? (
-                <div className="grid grid-cols-2 gap-3">
-                  <Stat label={en.today.totalWords} value={query.data.total_words} />
-                  <Stat label={en.today.newThisWeek} value={query.data.new_this_week} />
-                </div>
+                <>
+                  <DailyProgress today={query.data} />
+                  <div className="grid grid-cols-3 gap-3">
+                    <Stat label={en.today.totalWords} value={query.data.total_words} />
+                    <Stat label={en.today.mastered} value={query.data.mastered_words} />
+                    <Stat label={en.today.newThisWeek} value={query.data.new_this_week} />
+                  </div>
+                </>
               ) : null}
             </div>
 
