@@ -9,7 +9,11 @@ from app.config import Settings, get_settings
 from app.db import Pool, create_pool, get_pool
 from app.main import app
 from app.routers import auth
-from app.services.dictionary import DictionaryEntry, get_dictionary_fetch
+from app.services.dictionary import (
+    DictionaryEntry,
+    DictionaryUnavailableError,
+    get_dictionary_fetch,
+)
 from scripts.migrate import apply_migrations
 
 TEST_DATABASE_URL = os.environ.get("TEST_DATABASE_URL")
@@ -25,9 +29,12 @@ class FakeDictionary:
     def __init__(self) -> None:
         self.entries: dict[str, DictionaryEntry] = {}
         self.calls: list[str] = []
+        self.down = False
 
     def __call__(self, lemma: str) -> DictionaryEntry | None:
         self.calls.append(lemma)
+        if self.down:
+            raise DictionaryUnavailableError(lemma)
         return self.entries.get(lemma)
 
 

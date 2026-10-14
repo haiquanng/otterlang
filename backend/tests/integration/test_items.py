@@ -2,6 +2,7 @@ from typing import Any
 
 from fastapi.testclient import TestClient
 
+from app.db import Pool
 from app.services.dictionary import DictionaryEntry
 from tests.integration.conftest import FakeDictionary
 from tests.integration.helpers import signup
@@ -87,6 +88,24 @@ def test_dictionary_miss_still_saves_the_item(
     response = client.post("/items", json={"term": "flibbertigibbet"}, headers=auth)
     assert response.status_code == 201
     assert client.get(f"/items/{response.json()['id']}", headers=auth).json()["definition"] is None
+
+
+def test_outage_is_not_cached_and_the_next_save_fills_the_definition(
+    client: TestClient, dictionary: FakeDictionary, pool: Pool
+) -> None:
+    auth = signup(client)
+    dictionary.down = True
+    item = client.post("/items", json={"term": "invalidate"}, headers=auth)
+    assert item.status_code == 201
+    with pool.connection() as conn:
+        cached = conn.execute("select count(*) as n from dictionary_entries").fetchone()
+    assert cached == {"n": 0}
+
+    dictionary.down = False
+    dictionary.entries["invalidate"] = DictionaryEntry(pos="verb", definition="Make invalid.")
+    client.post("/items", json={"term": "invalidate"}, headers=auth)
+    detail = client.get(f"/items/{item.json()['id']}", headers=auth).json()
+    assert detail["definition"] == "Make invalid."
 
 
 def test_user_definition_is_never_overwritten(

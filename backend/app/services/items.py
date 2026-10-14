@@ -9,7 +9,7 @@ from psycopg.rows import DictRow
 
 from app.db import Pool
 from app.repositories import cards, dictionary, items
-from app.services.dictionary import Fetch
+from app.services.dictionary import DictionaryUnavailableError, Fetch
 from app.services.extraction import lemmatize, word_rank
 
 _SPACES = re.compile(r"\s+")
@@ -80,7 +80,11 @@ def enrich_item(pool: Pool, fetch: Fetch, user_id: UUID, item_id: UUID, lemma: s
         cached = dictionary.get_by_lemma(conn, lemma)
     if cached is None:
         # Network call outside any transaction, so a slow API never holds a connection.
-        entry = fetch(lemma)
+        try:
+            entry = fetch(lemma)
+        except DictionaryUnavailableError:
+            # Leave nothing cached: the next save of this word tries again.
+            return
         with pool.connection() as conn:
             cached = dictionary.upsert(conn, lemma, entry, word_rank(lemma))
     with pool.connection() as conn:

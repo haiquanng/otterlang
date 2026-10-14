@@ -2,7 +2,7 @@ from psycopg import Connection
 from psycopg.rows import DictRow
 from psycopg.types.json import Jsonb
 
-from app.services.dictionary import DictionaryEntry
+from app.services.dictionary_parsers import DictionaryEntry
 
 
 def get_by_lemma(conn: Connection[DictRow], lemma: str) -> DictRow | None:
