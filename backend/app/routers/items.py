@@ -58,6 +58,7 @@ class ContextOut(BaseModel):
     surface: str | None
     source_id: UUID | None
     source_title: str | None
+    written_by_learner: bool
 
 
 class ItemDetail(ItemOut):

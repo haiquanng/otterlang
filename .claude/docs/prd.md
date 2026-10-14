@@ -46,7 +46,7 @@ Crawling enriches the shared database at the start: dictionary entries, sample d
 | Cloze | Source sentence with the word hidden, type it | Match, allow lemma variants |
 | Define to word | English definition shown, type the word | Match |
 | Word in use | Pick the sentence using the word correctly | Multiple choice, for collocations |
-| Write sentence | Write a sentence with the word | Self-rated; AI feedback optional |
+| Write sentence | Write a sentence with the word; first due 3 days after saving | Checks: uses a form of the word, at least 5 words, capital start, end punctuation; then self-rated. The sentence is kept as an example. AI feedback optional, later |
 
 ## 8. Data model
 Source of truth: `db/migrations/`. Every user-owned table carries `user_id` (including child tables) so each query filters directly.
@@ -56,7 +56,7 @@ Source of truth: `db/migrations/`. Every user-owned table carries `user_id` (inc
 - `sources(id, user_id, title, url, body, kind[tech_blog|ielts|other], created_at)`
 - `dictionary_entries(lemma, pos, definition_en, phonetic, examples jsonb, freq_rank, cefr)` shared cache
 - `items(id, user_id, type[word|collocation|pattern], term, lemma, dict_entry_id?, definition, note, status, created_at, updated_at)`; unique `(user_id, type, lemma)`
-- `item_contexts(id, user_id, item_id, source_id, sentence, surface)`: `surface` is the exact form in the sentence (e.g. "Invalidating" for lemma "invalidate"), used to blank it out on cloze cards. Unique `(item_id, sentence)`.
+- `item_contexts(id, user_id, item_id, source_id, sentence, surface, written_by_learner)`: `surface` is the exact form in the sentence (e.g. "Invalidating" for lemma "invalidate"), used to blank it out on cloze cards. `written_by_learner` marks sentences from writing cards (shown as "Your sentences", never used for cloze). Unique `(item_id, sentence)`.
 - `item_tags(user_id, item_id, tag)`
 - `known_words(user_id, lemma)`
 - `cards(id, user_id, item_id, card_type, due, stability, difficulty, state, step, reps, lapses, last_review)`; unique `(item_id, card_type)`. Scheduling uses the `fsrs` library (py-fsrs 6); `step` is its learning-step index, null in the review state.
