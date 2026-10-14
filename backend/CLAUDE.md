@@ -5,7 +5,8 @@ Loaded when working under `backend/`. Root `CLAUDE.md` and `.claude/rules/` stil
 ## Commands (run from `backend/`)
 - Setup: `python3.12 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt`
 - Dev server: `.venv/bin/uvicorn app.main:app --reload`
-- Tests: `.venv/bin/pytest`
+- Tests: `.venv/bin/pytest`. Integration tests in `tests/integration/` need `TEST_DATABASE_URL` pointing at a throwaway Postgres (they drop and recreate `public`); without it they are skipped. CI provides one.
+- Create an account while sign-up is off: `.venv/bin/python -m scripts.create_user you@example.com --name "You"`
 - Lint/format: `.venv/bin/ruff check . && .venv/bin/ruff format --check .`
 - Types: `.venv/bin/mypy app scripts`
 - Migrate: `.venv/bin/python -m scripts.migrate` (applies `../db/migrations/*.sql`)
@@ -13,6 +14,10 @@ Loaded when working under `backend/`. Root `CLAUDE.md` and `.claude/rules/` stil
 ## Layout
 - `app/main.py` app factory, middleware, router wiring
 - `app/config.py` settings from env (`.env` locally, Render env in prod)
+- `app/db.py` connection pool; `Conn` dependency = one transaction per request
+- `app/deps.py` `CurrentUser` dependency (Bearer access token)
+- `app/schemas.py` request/response models; `app/models.py` internal dataclasses
+- `app/security/` password hashing (argon2id) and tokens (JWT access, hashed refresh)
 - `app/routers/` HTTP only: parse input, call a service, shape output
 - `app/services/` logic (extraction, grading, scheduling); pure where possible
 - `app/repositories/` SQL with psycopg; every user-owned query takes `user_id`
