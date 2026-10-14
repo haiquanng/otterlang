@@ -1,12 +1,14 @@
 import { expect, test } from '@playwright/test'
 import { mockApi } from './mockApi'
 import { mockSources } from './mockSources'
+import { mockWords } from './mockWords'
 
 const BODY = 'Invalidating a cache is one of the hardest problems in computing.\n\nThe trade-off is latency.'
 
 test('add a document, read it, find it in the list, delete it', async ({ page }) => {
   await mockApi(page, { signedIn: true })
   await mockSources(page)
+  await mockWords(page)
 
   await page.goto('/documents')
   await expect(page.getByText('No documents yet')).toBeVisible()
@@ -17,6 +19,8 @@ test('add a document, read it, find it in the list, delete it', async ({ page })
   await page.getByLabel('Text').fill(BODY)
   await page.getByRole('button', { name: 'Save document' }).click()
 
+  await expect(page.getByRole('heading', { name: 'Pick words to learn' })).toBeVisible()
+  await page.getByRole('link', { name: 'Back to document' }).click()
   await expect(page.getByRole('heading', { name: 'Caching at the edge' })).toBeVisible()
   await expect(page.getByText('The trade-off is latency.')).toBeVisible()
 
