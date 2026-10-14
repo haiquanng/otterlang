@@ -8,7 +8,6 @@ Loaded when working under `frontend/`. Root `CLAUDE.md`, `.claude/rules/` and `.
 - Typecheck: `npm run typecheck`
 - Lint: `npm run lint` (oxlint)
 - Unit tests: `npm test` (Vitest)
-- E2E: `npm run test:e2e` (Playwright, mobile 390x844 + desktop, Chromium)
 - PWA icons from `public/favicon.svg`: `npm run pwa-assets`
 
 ## Layout
@@ -19,7 +18,6 @@ Loaded when working under `frontend/`. Root `CLAUDE.md`, `.claude/rules/` and `.
 - `src/lib/nav.ts` navigation items shared by sidebar and bottom tabs
 - `src/i18n/en.ts` all UI text
 - `src/index.css` design tokens (CSS variables mapped into Tailwind via `@theme`)
-- `e2e/` Playwright specs
 
 ## Notes
 - Deployed on Vercel with root directory `frontend/`. `vercel.json` rewrites all paths to `index.html` for client routing.
