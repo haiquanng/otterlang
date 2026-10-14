@@ -74,7 +74,7 @@ def get_item(conn: Connection[DictRow], user_id: UUID, item_id: UUID) -> DictRow
 
 def contexts_for_item(conn: Connection[DictRow], user_id: UUID, item_id: UUID) -> list[DictRow]:
     return conn.execute(
-        "select c.sentence, c.surface, c.source_id, s.title as source_title "
+        "select c.sentence, c.surface, c.source_id, s.title as source_title, c.written_by_learner "
         "from item_contexts c left join sources s on s.id = c.source_id "
         "where c.user_id = %s and c.item_id = %s order by c.created_at",
         (user_id, item_id),

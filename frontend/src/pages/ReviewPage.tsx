@@ -5,6 +5,7 @@ import { EmptyState } from '@/components/EmptyState'
 import { ErrorState } from '@/components/ErrorState'
 import { ReviewPrompt } from '@/components/ReviewPrompt'
 import { ReviewResult } from '@/components/ReviewResult'
+import { WritePrompt } from '@/components/WritePrompt'
 import { useReviewSession } from '@/hooks/useReviewSession'
 import { en } from '@/i18n/en'
 
@@ -54,9 +55,13 @@ export function ReviewPage() {
             </Button>
           </div>
         ) : session.card && session.result && (session.phase === 'result' || session.phase === 'saving') ? (
-          <ReviewResult result={session.result} saving={session.phase === 'saving'} onRate={(r) => void session.rate(r)} />
+          <ReviewResult result={session.result} saving={session.phase === 'saving'} onRate={(r) => void session.rate(r)} writing={session.card.card_type === 'write_sentence'} />
         ) : session.card ? (
-          <ReviewPrompt key={session.card.id} card={session.card} busy={session.phase === 'checking'} onShown={session.startTimer} onCheck={(a) => void session.check(a)} />
+          session.card.card_type === 'write_sentence' ? (
+            <WritePrompt key={session.card.id} card={session.card} busy={session.phase === 'checking'} onShown={session.startTimer} onCheck={(a) => void session.check(a)} />
+          ) : (
+            <ReviewPrompt key={session.card.id} card={session.card} busy={session.phase === 'checking'} onShown={session.startTimer} onCheck={(a) => void session.check(a)} />
+          )
         ) : null}
       </main>
     </div>

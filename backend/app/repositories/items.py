@@ -52,11 +52,13 @@ def add_context(
     source_id: UUID | None,
     sentence: str,
     surface: str | None,
+    written_by_learner: bool = False,
 ) -> None:
     conn.execute(
-        "insert into item_contexts (user_id, item_id, source_id, sentence, surface) "
-        "values (%s, %s, %s, %s, %s) on conflict (item_id, sentence) do nothing",
-        (user_id, item_id, source_id, sentence, surface),
+        "insert into item_contexts "
+        "(user_id, item_id, source_id, sentence, surface, written_by_learner) "
+        "values (%s, %s, %s, %s, %s, %s) on conflict (item_id, sentence) do nothing",
+        (user_id, item_id, source_id, sentence, surface, written_by_learner),
     )
 
 

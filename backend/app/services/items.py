@@ -13,6 +13,8 @@ from app.services.dictionary import DictionaryUnavailableError, Fetch
 from app.services.extraction import lemmatize, word_rank
 
 _SPACES = re.compile(r"\s+")
+# Recognise the word a few times before being asked to produce it.
+WRITE_CARD_DELAY_DAYS = 3
 
 
 @dataclass(frozen=True)
@@ -65,6 +67,7 @@ def save_item(conn: Connection[DictRow], user_id: UUID, new: NewItem) -> SaveRes
     if new.sentence:
         items.add_context(conn, user_id, item_id, new.source_id, new.sentence, new.surface)
     cards.ensure(conn, user_id, item_id, card_types_for(new.sentence, new.definition))
+    cards.ensure_later(conn, user_id, item_id, "write_sentence", WRITE_CARD_DELAY_DAYS)
     return SaveResult(
         item_id=item_id,
         created=existing is None,

@@ -63,11 +63,15 @@ export function ItemPage() {
         </div>
       </header>
 
-      {item.contexts.length > 0 ? (
-        <section className="mb-8">
-          <h2 className="mb-2 text-sm font-medium text-muted">{en.item.contexts}</h2>
+      {[
+        { title: en.item.contexts, contexts: item.contexts.filter((c) => !c.written_by_learner) },
+        { title: en.item.yourSentences, contexts: item.contexts.filter((c) => c.written_by_learner) },
+      ].map((group) =>
+        group.contexts.length > 0 ? (
+        <section key={group.title} className="mb-8">
+          <h2 className="mb-2 text-sm font-medium text-muted">{group.title}</h2>
           <ul className="space-y-2">
-            {item.contexts.map((context) => (
+            {group.contexts.map((context) => (
               <li key={context.sentence} className="rounded-2xl border border-line bg-surface px-4 py-3">
                 <HighlightedSentence sentence={context.sentence} word={context.surface ?? item.term} />
                 {context.source_id ? (
@@ -79,7 +83,8 @@ export function ItemPage() {
             ))}
           </ul>
         </section>
-      ) : null}
+        ) : null,
+      )}
 
       <ItemEditor key={item.id} item={item} />
 

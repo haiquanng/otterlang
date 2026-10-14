@@ -2,18 +2,34 @@ from fastapi.testclient import TestClient
 
 from tests.integration.helpers import signup
 
-EXPECTED_EMPTY = {
-    "due_now": 0,
-    "due_later_today": 0,
-    "new_this_week": 0,
-    "total_words": 0,
-    "recent_documents": [],
-}
-
 
 def test_empty_account(client: TestClient) -> None:
     auth = signup(client)
-    assert client.get("/today?tz=Asia/Ho_Chi_Minh", headers=auth).json() == EXPECTED_EMPTY
+    data = client.get("/today?tz=Asia/Ho_Chi_Minh", headers=auth).json()
+    assert {k: data[k] for k in ("due_now", "total_words", "mastered_words", "reviewed_today")} == {
+        "due_now": 0,
+        "total_words": 0,
+        "mastered_words": 0,
+        "reviewed_today": 0,
+    }
+    assert data["daily_goal"] == 20
+    assert len(data["week"]) == 7
+    assert all(day["reviews"] == 0 for day in data["week"])
+    assert data["recent_documents"] == []
+
+
+def test_reviews_count_toward_today_and_goal_is_editable(client: TestClient) -> None:
+    auth = signup(client)
+    client.post("/items", json={"term": "resilient", "definition": "Recovers."}, headers=auth)
+    for card in client.get("/review/due", headers=auth).json():
+        client.post(f"/review/{card['id']}/answer", json={"rating": 3}, headers=auth)
+    client.patch("/me", json={"daily_goal": 30}, headers=auth)
+
+    data = client.get("/today?tz=Asia/Ho_Chi_Minh", headers=auth).json()
+    assert data["reviewed_today"] == 1
+    assert data["week"][-1]["reviews"] == 1
+    assert data["daily_goal"] == 30
+    assert client.patch("/me", json={"daily_goal": 0}, headers=auth).status_code == 422
 
 
 def test_counts_due_cards_new_words_and_recent_documents(client: TestClient) -> None:

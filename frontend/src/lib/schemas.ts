@@ -5,6 +5,7 @@ export const userSchema = z.object({
   email: z.string(),
   display_name: z.string().nullable(),
   skip_top_n: z.number().int(),
+  daily_goal: z.number().int(),
 })
 export type User = z.infer<typeof userSchema>
 
@@ -79,6 +80,7 @@ export const itemDetailSchema = itemSchema.extend({
       surface: z.string().nullable(),
       source_id: z.uuid().nullable(),
       source_title: z.string().nullable(),
+      written_by_learner: z.boolean(),
     }),
   ),
 })

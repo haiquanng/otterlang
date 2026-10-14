@@ -16,7 +16,7 @@ _CARD_SELECT = """
     join items i on i.id = c.item_id and i.status = 'active'
     left join lateral (
       select sentence, surface from item_contexts x
-      where x.item_id = i.id order by x.created_at limit 1
+      where x.item_id = i.id order by x.written_by_learner, x.created_at limit 1
     ) ctx on true
 """
 
