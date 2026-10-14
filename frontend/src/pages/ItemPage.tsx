@@ -50,7 +50,7 @@ export function ItemPage() {
 
   const item = query.data
   return (
-    <article>
+    <article className="max-w-3xl">
       {back}
       <header className="mb-6">
         <h1 className="text-3xl font-semibold tracking-tight">{item.term}</h1>

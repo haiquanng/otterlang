@@ -8,7 +8,7 @@ export function SettingsPage() {
   return (
     <>
       <PageHeader title={en.settings.title} />
-      <div className="space-y-3">
+      <div className="max-w-3xl space-y-3">
         <AccountCard />
         <ThemePicker />
         <ServerStatus />

@@ -43,7 +43,7 @@ export function AddPage() {
         <BookOpenText className="size-4" aria-hidden />
         {en.add.browseStarter}
       </Link>
-      <form onSubmit={onSubmit} className="space-y-5">
+      <form onSubmit={onSubmit} className="max-w-3xl space-y-5">
         <TextField
           label={en.add.titleLabel}
           placeholder={en.add.titlePlaceholder}

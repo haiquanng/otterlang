@@ -66,7 +66,7 @@ export function PickWordsPage() {
           action={{ to: '/documents', label: en.pick.doneAction }}
         />
       ) : (
-        <ul className="space-y-3">
+        <ul className="max-w-4xl space-y-3">
           {pick.remaining.map((candidate) => (
             <li key={candidate.lemma}>
               <CandidateRow
