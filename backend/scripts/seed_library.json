@@ -1,0 +1,31 @@
+{
+  "wikipedia": [
+    { "title": "Cache invalidation", "kind": "tech_blog" },
+    { "title": "Idempotence", "kind": "tech_blog" },
+    { "title": "Load balancing (computing)", "kind": "tech_blog" },
+    { "title": "Microservices", "kind": "tech_blog" },
+    { "title": "REST", "kind": "tech_blog" },
+    { "title": "Continuous integration", "kind": "tech_blog" },
+    { "title": "Technical debt", "kind": "tech_blog" },
+    { "title": "Code review", "kind": "tech_blog" },
+    { "title": "Database index", "kind": "tech_blog" },
+    { "title": "Eventual consistency", "kind": "tech_blog" },
+    { "title": "Rate limiting", "kind": "tech_blog" },
+    { "title": "Unit testing", "kind": "tech_blog" },
+    { "title": "Software design pattern", "kind": "tech_blog" },
+    { "title": "Garbage collection (computer science)", "kind": "tech_blog" },
+    { "title": "Public-key cryptography", "kind": "tech_blog" },
+    { "title": "Urban agriculture", "kind": "ielts" },
+    { "title": "Renewable energy", "kind": "ielts" },
+    { "title": "Coral reef", "kind": "ielts" },
+    { "title": "Plastic pollution", "kind": "ielts" },
+    { "title": "Remote work", "kind": "ielts" },
+    { "title": "Urbanization", "kind": "ielts" },
+    { "title": "Deforestation", "kind": "ielts" },
+    { "title": "Placebo", "kind": "ielts" },
+    { "title": "Western honey bee", "kind": "ielts" },
+    { "title": "Multilingualism", "kind": "ielts" },
+    { "title": "Sleep deprivation", "kind": "ielts" }
+  ],
+  "urls": []
+}
