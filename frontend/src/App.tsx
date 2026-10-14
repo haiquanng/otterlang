@@ -1,10 +1,13 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import { AppShell } from '@/components/AppShell'
+import { RequireAuth } from '@/components/RequireAuth'
+import { SessionGate } from '@/components/SessionGate'
 import { AddPage } from '@/pages/AddPage'
 import { DocumentsPage } from '@/pages/DocumentsPage'
 import { LibraryPage } from '@/pages/LibraryPage'
 import { SettingsPage } from '@/pages/SettingsPage'
+import { SignInPage } from '@/pages/SignInPage'
 import { TodayPage } from '@/pages/TodayPage'
 
 const queryClient = new QueryClient({
@@ -13,13 +16,24 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
   {
-    element: <AppShell />,
+    element: <SessionGate />,
     children: [
-      { index: true, element: <TodayPage /> },
-      { path: 'library', element: <LibraryPage /> },
-      { path: 'add', element: <AddPage /> },
-      { path: 'documents', element: <DocumentsPage /> },
-      { path: 'settings', element: <SettingsPage /> },
+      { path: 'sign-in', element: <SignInPage /> },
+      {
+        element: <RequireAuth />,
+        children: [
+          {
+            element: <AppShell />,
+            children: [
+              { index: true, element: <TodayPage /> },
+              { path: 'library', element: <LibraryPage /> },
+              { path: 'add', element: <AddPage /> },
+              { path: 'documents', element: <DocumentsPage /> },
+              { path: 'settings', element: <SettingsPage /> },
+            ],
+          },
+        ],
+      },
     ],
   },
 ])

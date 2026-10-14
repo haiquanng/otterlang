@@ -1,24 +1,33 @@
 import { z } from 'zod'
+import { request } from '@/lib/http'
+import { healthSchema, tokenSchema, userSchema, type User } from '@/lib/schemas'
+import { clearSession, setSession } from '@/lib/session'
 
-const baseUrl = import.meta.env.VITE_API_URL ?? 'http://localhost:8000'
+export { ApiError, refreshSession } from '@/lib/http'
 
-export class ApiError extends Error {
-  readonly status: number
+export function getHealth() {
+  return request('/health', healthSchema, { retryOn401: false })
+}
 
-  constructor(status: number, message: string) {
-    super(message)
-    this.status = status
+export async function signIn(email: string, password: string): Promise<User> {
+  const data = await request('/auth/login', tokenSchema, {
+    method: 'POST',
+    body: { email, password },
+    retryOn401: false,
+  })
+  setSession(data.access_token, data.user)
+  return data.user
+}
+
+export async function signOut(): Promise<void> {
+  try {
+    await request('/auth/logout', z.undefined(), { method: 'POST', retryOn401: false })
+  } finally {
+    // Sign out locally even if the server is unreachable.
+    clearSession()
   }
 }
 
-export async function apiGet<T>(path: string, schema: z.ZodType<T>): Promise<T> {
-  const response = await fetch(`${baseUrl}${path}`, { credentials: 'include' })
-  if (!response.ok) throw new ApiError(response.status, `GET ${path} failed`)
-  return schema.parse(await response.json())
-}
-
-const healthSchema = z.object({ status: z.literal('ok') })
-
-export function getHealth() {
-  return apiGet('/health', healthSchema)
+export function getMe() {
+  return request('/me', userSchema)
 }
