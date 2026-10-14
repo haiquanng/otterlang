@@ -34,6 +34,5 @@ export async function mockApi(page: Page, { signedIn }: { signedIn: boolean }) {
     session = false
     return route.fulfill({ status: 204 })
   })
-  await page.route(`${API}/health`, (route) => route.fulfill({ json: { status: 'ok' } }))
   await page.route(`${API}/today**`, (route) => route.fulfill({ json: emptyToday }))
 }

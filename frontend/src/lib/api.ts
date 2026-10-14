@@ -3,7 +3,6 @@ import { request } from '@/lib/http'
 import {
   addedSchema,
   candidateSchema,
-  healthSchema,
   itemDetailSchema,
   itemSchema,
   sourceSchema,
@@ -19,10 +18,6 @@ import {
 import { clearSession, setSession } from '@/lib/session'
 
 export { ApiError, refreshSession } from '@/lib/http'
-
-export function getHealth() {
-  return request('/health', healthSchema, { retryOn401: false })
-}
 
 export async function signIn(email: string, password: string): Promise<User> {
   const data = await request('/auth/login', tokenSchema, {
