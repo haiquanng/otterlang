@@ -54,6 +54,14 @@ merge to main ──► Render and Vercel auto-deploy (their own Git triggers)
 Your service was created by hand, so set **Build Command** to
 `pip install -r requirements.txt && python -m scripts.migrate`.
 
+## 7. Daily reminders (Web Push)
+1. On your machine: `cd backend && .venv/bin/python -m scripts.generate_vapid_keys`. Use a separate pair for production.
+2. Render → otterlang-api → Environment: add `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` (`mailto:` your email) and `REMINDER_SECRET` (any long random string).
+3. cron-job.org → new job: **POST** `https://otterlang-api.onrender.com/push/run`, every hour at minute 0, request header `X-Reminder-Secret: <REMINDER_SECRET>`.
+4. In the app: Settings → Daily reminder → on. iPhone: add the app to the Home Screen first (Share → Add to Home Screen), then open it from there; iOS only allows notifications for installed web apps.
+
+Notifications need the service worker, which runs in the production build (Vercel, or `npm run build && npm run preview` locally), not in `npm run dev`.
+
 ## Notes
 - First request after a long idle can take ~1 minute (Render cold start); the app shows a "waking up" state.
 - `SIGNUP_ENABLED=false` until friends are invited; create accounts with `scripts.create_user`.

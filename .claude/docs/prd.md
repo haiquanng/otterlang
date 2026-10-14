@@ -51,7 +51,8 @@ Crawling enriches the shared database at the start: dictionary entries, sample d
 ## 8. Data model
 Source of truth: `db/migrations/`. Every user-owned table carries `user_id` (including child tables) so each query filters directly.
 
-- `users(id, email citext unique, password_hash, display_name, skip_top_n, daily_goal, is_admin, created_at)`; `daily_goal` = reviews per day (default 20)
+- `users(id, email citext unique, password_hash, display_name, skip_top_n, daily_goal, is_admin, created_at)`; `daily_goal` = reviews per day (default 20); `reminder_enabled`, `reminder_hour` (local, 0-23), `timezone` (IANA), `last_reminded_on` (local date) for daily reminders
+- `push_subscriptions(id, user_id, endpoint unique, p256dh, auth, created_at)`: one Web Push subscription per device
 - `refresh_tokens(id, user_id, token_hash, expires_at, revoked_at)`
 - `sources(id, user_id, title, url, body, kind[tech_blog|ielts|other], created_at)`
 - `dictionary_entries(lemma, pos, definition_en, phonetic, examples jsonb, freq_rank, cefr)` shared cache
@@ -76,6 +77,7 @@ Authorization is enforced in the backend. RLS is enabled with no policies on eve
 - `GET /health`
 
 ## 10. Operations
+- Daily reminders: cron-job.org calls `POST /push/run` hourly with the `X-Reminder-Secret` header. Learners whose local reminder hour has passed today, who have cards due and were not reminded today, get one Web Push notification per device. Expired subscriptions (404/410) are deleted. Needs `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT`, `REMINDER_SECRET`.
 - Frontend on Vercel (root directory `frontend/`).
 - FastAPI on Render free (`render.yaml`), cron pings `/health` about every 10 minutes. Frontend shows a waking-up state on cold start.
 - No local file writes (ephemeral filesystem).

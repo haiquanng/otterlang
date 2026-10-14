@@ -22,6 +22,11 @@ class Settings(BaseSettings):
     cookie_secure: bool = True
     cookie_samesite: Literal["lax", "strict", "none"] = "lax"
     cookie_path: str = "/auth"
+    # Web Push reminders; all four must be set for reminders to work (see deployment.md).
+    vapid_public_key: str | None = None
+    vapid_private_key: str | None = None
+    vapid_subject: str = "mailto:otterlang21@gmail.com"
+    reminder_secret: str | None = None
     ai_enabled: bool = False
     gemini_api_key: str | None = None
 

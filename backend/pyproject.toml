@@ -18,7 +18,7 @@ strict = true
 plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]
-module = ["lemminflect"]
+module = ["lemminflect", "pywebpush"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

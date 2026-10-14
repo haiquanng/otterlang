@@ -9,6 +9,9 @@ const user = {
   display_name: null,
   skip_top_n: 3000,
   daily_goal: 20,
+  reminder_enabled: false,
+  reminder_hour: 19,
+  timezone: 'UTC',
 }
 const tokenBody = { access_token: 'fresh', token_type: 'bearer', user }
 const okSchema = z.object({ ok: z.boolean() })

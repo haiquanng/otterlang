@@ -13,7 +13,8 @@ export default defineConfig({
       includeAssets: ['favicon.svg', 'apple-touch-icon-180x180.png'],
       // API calls go through the same origin (/api, proxied by Vercel); never answer them
       // with the cached app shell.
-      workbox: { navigateFallbackDenylist: [/^\/api\//] },
+      // push-sw.js adds the reminder notification handlers to the generated worker.
+      workbox: { navigateFallbackDenylist: [/^\/api\//], importScripts: ['push-sw.js'] },
       manifest: {
         name: 'OtterLang',
         short_name: 'OtterLang',

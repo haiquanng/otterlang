@@ -6,6 +6,9 @@ export const userSchema = z.object({
   display_name: z.string().nullable(),
   skip_top_n: z.number().int(),
   daily_goal: z.number().int(),
+  reminder_enabled: z.boolean(),
+  reminder_hour: z.number().int(),
+  timezone: z.string(),
 })
 export type User = z.infer<typeof userSchema>
 

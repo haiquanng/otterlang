@@ -27,5 +27,11 @@ services:
         value: /api/auth
       - key: SIGNUP_ENABLED
         value: "false"
+      - key: VAPID_PUBLIC_KEY
+        sync: false
+      - key: VAPID_PRIVATE_KEY
+        sync: false
+      - key: REMINDER_SECRET
+        generateValue: true
       - key: AI_ENABLED
         value: "false"

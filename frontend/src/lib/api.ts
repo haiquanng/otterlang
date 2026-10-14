@@ -43,7 +43,15 @@ export function getMe() {
   return request('/me', userSchema)
 }
 
-export function updateMe(update: { daily_goal?: number; display_name?: string | null }) {
+export type MeUpdate = {
+  daily_goal?: number
+  display_name?: string | null
+  reminder_enabled?: boolean
+  reminder_hour?: number
+  timezone?: string
+}
+
+export function updateMe(update: MeUpdate) {
   return request('/me', userSchema, { method: 'PATCH', body: update })
 }
 

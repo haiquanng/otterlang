@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import date, datetime
 from uuid import UUID
 
 
@@ -11,6 +11,10 @@ class User:
     display_name: str | None
     skip_top_n: int
     daily_goal: int
+    reminder_enabled: bool
+    reminder_hour: int
+    timezone: str
+    last_reminded_on: date | None
     is_admin: bool
     created_at: datetime
 
