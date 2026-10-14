@@ -10,6 +10,7 @@ from app.routers import (
     auth,
     candidates,
     health,
+    import_link,
     items,
     known_words,
     library_documents,
@@ -44,6 +45,7 @@ def create_app() -> FastAPI:
     app.include_router(health.router)
     app.include_router(auth.router)
     app.include_router(me.router)
+    app.include_router(import_link.router)
     app.include_router(sources.router)
     app.include_router(candidates.router)
     app.include_router(known_words.router)
