@@ -25,6 +25,8 @@ Out: grammar curriculum, IELTS mock tests, pronunciation scoring, chat tutor, fu
 ## 4. Seeding (owner only)
 Crawling enriches the shared database at the start: dictionary entries, sample documents. It is a CLI script in `backend/scripts/`, run by the owner. No admin UI until it is needed. End users never trigger a crawl.
 
+**Starter library:** `scripts/seed_library.py` imports the list in `scripts/seed_library.json` into the shared `library_documents` table: Wikipedia articles through the official API (CC BY-SA, attribution stored) for technical and IELTS-style topics, plus any URL through `trafilatura` under the SSRF rules. Copyrighted material (IELTS books, paid blogs) is not imported for redistribution. A learner adds a library text to their own documents with one tap; it is a copy, so they can edit or delete it freely. New accounts see the library on Today and in empty Documents.
+
 ## 5. Main flow
 1. Add document (paste text).
 2. Backend lemmatizes, removes stopwords, drops words in the user's known list or above their frequency threshold, returns candidates with source sentences.
@@ -58,6 +60,7 @@ Source of truth: `db/migrations/`. Every user-owned table carries `user_id` (inc
 - `known_words(user_id, lemma)`
 - `cards(id, user_id, item_id, card_type, due, stability, difficulty, state, step, reps, lapses, last_review)`; unique `(item_id, card_type)`. Scheduling uses the `fsrs` library (py-fsrs 6); `step` is its learning-step index, null in the review state.
 - `review_logs(id, user_id, card_id, rating, correct, response_ms, reviewed_at)`
+- `library_documents(id, title, kind, url unique, body, source_name, license, word_count, created_at)` shared, owner-curated; `sources.library_document_id` remembers which library text a user copied (unique per user).
 
 Authorization is enforced in the backend. RLS is enabled with no policies on every table only to close Supabase's auto-generated REST API; the backend connects as the owner role and is not affected.
 
