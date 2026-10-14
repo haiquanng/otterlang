@@ -2,6 +2,28 @@
 
 Personal English learning app: paste real content, pick the words worth learning, review them with spaced repetition and production cards.
 
-Status: planning. Product and data model are in [.claude/docs/prd.md](.claude/docs/prd.md). Project rules for Claude Code are in [CLAUDE.md](CLAUDE.md).
+## Structure
+| Path | What |
+|---|---|
+| `frontend/` | React + TypeScript PWA (Vite, Tailwind), deployed on Vercel |
+| `backend/` | FastAPI API, deployed on Render |
+| `db/migrations/` | Postgres schema (Supabase Postgres) |
+| `.claude/` | Product docs and rules for Claude Code |
 
-Stack: React + TypeScript PWA, FastAPI on Render, Supabase Postgres.
+## Local setup
+```bash
+# backend
+cd backend
+python3.12 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
+cp .env.example .env   # fill DATABASE_URL and JWT_SECRET
+.venv/bin/python -m scripts.migrate
+.venv/bin/uvicorn app.main:app --reload
+
+# frontend
+cd frontend
+npm install
+cp .env.example .env
+npm run dev
+```
+
+Product and data model: [.claude/docs/prd.md](.claude/docs/prd.md). Design guide: [.claude/docs/design.md](.claude/docs/design.md).
