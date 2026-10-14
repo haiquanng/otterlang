@@ -11,6 +11,7 @@ class UserOut(BaseModel):
     email: str
     display_name: str | None
     skip_top_n: int
+    daily_goal: int
 
     @classmethod
     def from_user(cls, user: User) -> "UserOut":
@@ -19,6 +20,7 @@ class UserOut(BaseModel):
             email=user.email,
             display_name=user.display_name,
             skip_top_n=user.skip_top_n,
+            daily_goal=user.daily_goal,
         )
 
 
@@ -42,3 +44,4 @@ class TokenOut(BaseModel):
 class MeUpdate(BaseModel):
     display_name: str | None = Field(default=None, max_length=80)
     skip_top_n: int | None = Field(default=None, ge=0, le=50_000)
+    daily_goal: int | None = Field(default=None, ge=1, le=200)

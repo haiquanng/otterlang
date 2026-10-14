@@ -10,6 +10,7 @@ class User:
     password_hash: str
     display_name: str | None
     skip_top_n: int
+    daily_goal: int
     is_admin: bool
     created_at: datetime
 

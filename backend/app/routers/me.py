@@ -19,4 +19,7 @@ def update_me(body: MeUpdate, user: CurrentUser, conn: Conn) -> UserOut:
     fields = body.model_fields_set
     display_name = body.display_name if "display_name" in fields else user.display_name
     skip_top_n = body.skip_top_n if body.skip_top_n is not None else user.skip_top_n
-    return UserOut.from_user(users.update_profile(conn, user.id, display_name, skip_top_n))
+    daily_goal = body.daily_goal if body.daily_goal is not None else user.daily_goal
+    return UserOut.from_user(
+        users.update_profile(conn, user.id, display_name, skip_top_n, daily_goal)
+    )

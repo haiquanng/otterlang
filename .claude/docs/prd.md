@@ -36,6 +36,7 @@ Crawling enriches the shared database at the start: dictionary entries, sample d
 
 ## 6. Personalization
 - `skip_top_n`: ignore the N most frequent words when suggesting (default about 3000, per user).
+- `daily_goal`: reviews per day; Today shows progress toward it, the last 7 days, and words mastered (a card in long-term review, stability of 21+ days). No streaks.
 - `known_words` per user.
 - Tags: technical, ielts, general. An item can carry several.
 
@@ -50,7 +51,7 @@ Crawling enriches the shared database at the start: dictionary entries, sample d
 ## 8. Data model
 Source of truth: `db/migrations/`. Every user-owned table carries `user_id` (including child tables) so each query filters directly.
 
-- `users(id, email citext unique, password_hash, display_name, skip_top_n, is_admin, created_at)`
+- `users(id, email citext unique, password_hash, display_name, skip_top_n, daily_goal, is_admin, created_at)`; `daily_goal` = reviews per day (default 20)
 - `refresh_tokens(id, user_id, token_hash, expires_at, revoked_at)`
 - `sources(id, user_id, title, url, body, kind[tech_blog|ielts|other], created_at)`
 - `dictionary_entries(lemma, pos, definition_en, phonetic, examples jsonb, freq_rank, cefr)` shared cache
