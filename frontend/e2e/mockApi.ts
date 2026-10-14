@@ -11,6 +11,11 @@ export const testUser = {
 
 const token = { access_token: 'test-token', token_type: 'bearer', user: testUser }
 
+/** The Today page heading, whatever the time of day the test runs. */
+export const greeting = /^Good (morning|afternoon|evening)/
+
+const emptyToday = { due_now: 0, due_later_today: 0, new_this_week: 0, total_words: 0, recent_documents: [] }
+
 /** Mock the auth API. `signedIn` decides whether the refresh cookie is "valid" on load. */
 export async function mockApi(page: Page, { signedIn }: { signedIn: boolean }) {
   let session = signedIn
@@ -30,4 +35,5 @@ export async function mockApi(page: Page, { signedIn }: { signedIn: boolean }) {
     return route.fulfill({ status: 204 })
   })
   await page.route(`${API}/health`, (route) => route.fulfill({ json: { status: 'ok' } }))
+  await page.route(`${API}/today**`, (route) => route.fulfill({ json: emptyToday }))
 }

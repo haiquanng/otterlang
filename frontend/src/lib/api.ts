@@ -1,6 +1,21 @@
 import { z } from 'zod'
 import { request } from '@/lib/http'
-import { healthSchema, tokenSchema, userSchema, type User } from '@/lib/schemas'
+import {
+  addedSchema,
+  candidateSchema,
+  healthSchema,
+  itemDetailSchema,
+  itemSchema,
+  sourceSchema,
+  sourceSummarySchema,
+  tokenSchema,
+  userSchema,
+  type ItemFilters,
+  type ItemInput,
+  type ItemUpdate,
+  type SourceInput,
+  type User,
+} from '@/lib/schemas'
 import { clearSession, setSession } from '@/lib/session'
 
 export { ApiError, refreshSession } from '@/lib/http'
@@ -30,4 +45,60 @@ export async function signOut(): Promise<void> {
 
 export function getMe() {
   return request('/me', userSchema)
+}
+
+export function listSources() {
+  return request('/sources', z.array(sourceSummarySchema))
+}
+
+export function getSource(id: string) {
+  return request(`/sources/${encodeURIComponent(id)}`, sourceSchema)
+}
+
+export function createSource(input: SourceInput) {
+  return request('/sources', sourceSchema, { method: 'POST', body: input })
+}
+
+export function deleteSource(id: string) {
+  return request(`/sources/${encodeURIComponent(id)}`, z.undefined(), { method: 'DELETE' })
+}
+
+export function listCandidates(sourceId: string) {
+  return request(`/sources/${encodeURIComponent(sourceId)}/candidates`, z.array(candidateSchema))
+}
+
+export function markKnown(lemma: string) {
+  return request('/known-words', addedSchema, { method: 'POST', body: { lemma } })
+}
+
+export function markKnownBulk(lemmas: string[]) {
+  return request('/known-words/bulk', addedSchema, { method: 'POST', body: { lemmas } })
+}
+
+export function unmarkKnown(lemma: string) {
+  return request(`/known-words/${encodeURIComponent(lemma)}`, z.undefined(), { method: 'DELETE' })
+}
+
+export function listItems({ q, tag }: ItemFilters = {}) {
+  const params = new URLSearchParams()
+  if (q?.trim()) params.set('q', q.trim())
+  if (tag) params.set('tag', tag)
+  const query = params.toString()
+  return request(`/items${query ? `?${query}` : ''}`, z.array(itemSchema))
+}
+
+export function getItem(id: string) {
+  return request(`/items/${encodeURIComponent(id)}`, itemDetailSchema)
+}
+
+export function createItem(input: ItemInput) {
+  return request('/items', itemDetailSchema, { method: 'POST', body: input })
+}
+
+export function updateItem(id: string, update: ItemUpdate) {
+  return request(`/items/${encodeURIComponent(id)}`, itemDetailSchema, { method: 'PATCH', body: update })
+}
+
+export function deleteItem(id: string) {
+  return request(`/items/${encodeURIComponent(id)}`, z.undefined(), { method: 'DELETE' })
 }
