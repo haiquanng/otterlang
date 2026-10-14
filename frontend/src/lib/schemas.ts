@@ -54,3 +54,46 @@ export const candidateSchema = z.object({
 export type Candidate = z.infer<typeof candidateSchema>
 
 export const addedSchema = z.object({ added: z.number().int() })
+
+export const tags = ['technical', 'ielts', 'general'] as const
+export const tagSchema = z.enum(tags)
+export type Tag = z.infer<typeof tagSchema>
+
+export const itemSchema = z.object({
+  id: z.uuid(),
+  type: z.enum(['word', 'collocation', 'pattern']),
+  term: z.string(),
+  lemma: z.string(),
+  definition: z.string().nullable(),
+  note: z.string().nullable(),
+  status: z.enum(['active', 'archived']),
+  tags: z.array(tagSchema),
+  sentence: z.string().nullable().optional(),
+  created_at: z.string(),
+})
+export type Item = z.infer<typeof itemSchema>
+
+export const itemDetailSchema = itemSchema.extend({
+  phonetic: z.string().nullable(),
+  contexts: z.array(
+    z.object({
+      sentence: z.string(),
+      surface: z.string().nullable(),
+      source_id: z.uuid().nullable(),
+      source_title: z.string().nullable(),
+    }),
+  ),
+})
+export type ItemDetail = z.infer<typeof itemDetailSchema>
+
+export type ItemInput = {
+  term: string
+  surface?: string
+  sentence?: string
+  source_id?: string
+  tags?: Tag[]
+}
+
+export type ItemUpdate = Partial<Pick<Item, 'definition' | 'note' | 'tags' | 'status'>>
+
+export type ItemFilters = { q?: string; tag?: Tag }

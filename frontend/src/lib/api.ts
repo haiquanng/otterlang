@@ -4,10 +4,15 @@ import {
   addedSchema,
   candidateSchema,
   healthSchema,
+  itemDetailSchema,
+  itemSchema,
   sourceSchema,
   sourceSummarySchema,
   tokenSchema,
   userSchema,
+  type ItemFilters,
+  type ItemInput,
+  type ItemUpdate,
   type SourceInput,
   type User,
 } from '@/lib/schemas'
@@ -72,4 +77,28 @@ export function markKnownBulk(lemmas: string[]) {
 
 export function unmarkKnown(lemma: string) {
   return request(`/known-words/${encodeURIComponent(lemma)}`, z.undefined(), { method: 'DELETE' })
+}
+
+export function listItems({ q, tag }: ItemFilters = {}) {
+  const params = new URLSearchParams()
+  if (q?.trim()) params.set('q', q.trim())
+  if (tag) params.set('tag', tag)
+  const query = params.toString()
+  return request(`/items${query ? `?${query}` : ''}`, z.array(itemSchema))
+}
+
+export function getItem(id: string) {
+  return request(`/items/${encodeURIComponent(id)}`, itemDetailSchema)
+}
+
+export function createItem(input: ItemInput) {
+  return request('/items', itemDetailSchema, { method: 'POST', body: input })
+}
+
+export function updateItem(id: string, update: ItemUpdate) {
+  return request(`/items/${encodeURIComponent(id)}`, itemDetailSchema, { method: 'PATCH', body: update })
+}
+
+export function deleteItem(id: string) {
+  return request(`/items/${encodeURIComponent(id)}`, z.undefined(), { method: 'DELETE' })
 }
