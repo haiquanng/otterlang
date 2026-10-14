@@ -22,6 +22,7 @@
   --color-otter: #6e4526;
   --color-otter-soft: #efdfc9;
   --color-danger: #a3200f;
+  --color-on-danger: #ffffff;
 }
 
 :root[data-theme='dark'] {
@@ -38,6 +39,7 @@
   --color-otter: #d0a27f;
   --color-otter-soft: #3a2c22;
   --color-danger: #f97066;
+  --color-on-danger: #2a0a07;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -54,6 +56,8 @@
     --color-otter: #d0a27f;
     --color-otter-soft: #3a2c22;
     --color-danger: #f97066;
+    --color-on-danger: #2a0a07;
+  --color-on-danger: #2a0a07;
   }
 }
 
@@ -69,8 +73,23 @@
   --color-otter: var(--color-otter);
   --color-otter-soft: var(--color-otter-soft);
   --color-danger: var(--color-danger);
+  --color-on-danger: var(--color-on-danger);
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --font-reading: 'Literata Variable', ui-serif, Georgia, serif;
+}
+
+/* Dialog entrance: scale only, so it composes with Tailwind's translate centering. */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
 }
 
 body {

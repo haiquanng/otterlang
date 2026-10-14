@@ -28,8 +28,10 @@ test('add a document, read it, find it in the list, delete it', async ({ page })
   await expect(page.getByRole('link', { name: /Caching at the edge/ })).toBeVisible()
   await page.getByRole('link', { name: /Caching at the edge/ }).click()
 
-  page.once('dialog', (dialog) => void dialog.accept())
   await page.getByRole('button', { name: 'Delete' }).click()
+  const dialog = page.getByRole('alertdialog', { name: 'Delete this document?' })
+  await expect(dialog).toBeVisible()
+  await dialog.getByRole('button', { name: 'Delete' }).click()
   await expect(page.getByText('No documents yet')).toBeVisible()
 })
 

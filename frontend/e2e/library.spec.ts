@@ -34,8 +34,8 @@ test('quick-add, search, filter, edit and delete a word', async ({ page }) => {
   await expect(page.getByRole('link', { name: /idempotent/ })).toHaveCount(0)
   await page.getByRole('link', { name: /backward compatibility/ }).click()
 
-  page.once('dialog', (dialog) => void dialog.accept())
   await page.getByRole('button', { name: 'Delete' }).click()
+  await page.getByRole('alertdialog').getByRole('button', { name: 'Delete' }).click()
   await expect(page.getByRole('heading', { name: 'Library' })).toBeVisible()
   await expect(page.getByRole('link', { name: /backward compatibility/ })).toHaveCount(0)
 })

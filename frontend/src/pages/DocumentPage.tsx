@@ -1,7 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { ArrowLeft, ExternalLink, Sparkles, Trash2 } from 'lucide-react'
 import { Link, useNavigate, useParams } from 'react-router'
+import { useState } from 'react'
 import { Button } from '@/components/Button'
+import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { ErrorState } from '@/components/ErrorState'
 import { KindBadge } from '@/components/KindBadge'
 import { en } from '@/i18n/en'
@@ -13,6 +15,7 @@ export function DocumentPage() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const query = useQuery({ queryKey: ['sources', id], queryFn: () => getSource(id) })
+  const [confirming, setConfirming] = useState(false)
   const remove = useMutation({
     mutationFn: () => deleteSource(id),
     onSuccess: async () => {
@@ -20,10 +23,6 @@ export function DocumentPage() {
       navigate('/documents', { replace: true })
     },
   })
-
-  function onDelete() {
-    if (window.confirm(en.documents.deleteConfirm)) remove.mutate()
-  }
 
   const back = (
     <Link to="/documents" className="mb-6 inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-muted hover:text-ink">
@@ -80,10 +79,22 @@ export function DocumentPage() {
       <div className="max-w-[68ch] whitespace-pre-wrap font-reading text-[17px] leading-[1.75] md:text-lg">{source.body}</div>
 
       <footer className="mt-12 border-t border-line pt-6">
-        <Button variant="danger" loading={remove.isPending} onClick={onDelete}>
-          <Trash2 className="size-4" aria-hidden />
-          {en.common.delete}
-        </Button>
+        <ConfirmDialog
+          open={confirming}
+          onOpenChange={setConfirming}
+          title={en.documents.deleteTitle}
+          description={en.documents.deleteBody}
+          confirmLabel={en.common.delete}
+          tone="danger"
+          loading={remove.isPending}
+          onConfirm={() => remove.mutate()}
+          trigger={
+            <Button variant="danger">
+              <Trash2 className="size-4" aria-hidden />
+              {en.common.delete}
+            </Button>
+          }
+        />
       </footer>
     </article>
   )
