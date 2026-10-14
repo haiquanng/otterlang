@@ -14,7 +14,7 @@ export class ApiError extends Error {
 }
 
 export type RequestOptions = {
-  method?: 'GET' | 'POST' | 'PATCH' | 'DELETE'
+  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
   body?: unknown
   // false for endpoints where a 401 means "wrong input", not "token expired".
   retryOn401?: boolean
