@@ -11,6 +11,7 @@ import { ItemPage } from '@/pages/ItemPage'
 import { LibraryPage } from '@/pages/LibraryPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { PickWordsPage } from '@/pages/PickWordsPage'
+import { ReviewPage } from '@/pages/ReviewPage'
 import { SettingsPage } from '@/pages/SettingsPage'
 import { SignInPage } from '@/pages/SignInPage'
 import { TodayPage } from '@/pages/TodayPage'
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       {
         element: <RequireAuth />,
         children: [
+          { path: 'review', element: <ReviewPage /> },
           {
             element: <AppShell />,
             children: [
