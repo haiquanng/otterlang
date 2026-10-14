@@ -26,4 +26,4 @@ cp .env.example .env
 npm run dev
 ```
 
-Product and data model: [.claude/docs/prd.md](.claude/docs/prd.md). Design guide: [.claude/docs/design.md](.claude/docs/design.md).
+Product and data model: [.claude/docs/prd.md](.claude/docs/prd.md). Design guide: [.claude/docs/design.md](.claude/docs/design.md). Deploying: [.claude/docs/deployment.md](.claude/docs/deployment.md).
