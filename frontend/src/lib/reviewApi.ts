@@ -18,6 +18,7 @@ export const checkSchema = z.object({
   sentence: z.string().nullable(),
   definition: z.string().nullable(),
   suggested_rating: z.number().int().min(1).max(4),
+  issues: z.array(z.string()).default([]),
 })
 export type CheckResult = z.infer<typeof checkSchema>
 
@@ -36,9 +37,9 @@ export function checkCard(id: string, answer: string, responseMs: number) {
   })
 }
 
-export function answerCard(id: string, rating: Rating, correct: boolean, responseMs: number) {
+export function answerCard(id: string, rating: Rating, correct: boolean, responseMs: number, sentence?: string) {
   return request(`/review/${encodeURIComponent(id)}/answer`, answerSchema, {
     method: 'POST',
-    body: { rating, correct, response_ms: responseMs },
+    body: { rating, correct, response_ms: responseMs, sentence },
   })
 }

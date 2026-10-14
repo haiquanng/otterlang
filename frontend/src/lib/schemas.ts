@@ -80,6 +80,7 @@ export const itemDetailSchema = itemSchema.extend({
       surface: z.string().nullable(),
       source_id: z.uuid().nullable(),
       source_title: z.string().nullable(),
+      written_by_learner: z.boolean(),
     }),
   ),
 })

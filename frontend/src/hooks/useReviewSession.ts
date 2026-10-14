@@ -47,7 +47,9 @@ export function useReviewSession() {
     setPhase('saving')
     setError(false)
     try {
-      await answerCard(card.id, rating, result.correct, responseMs.current)
+      // A writing card sends the sentence back so it can be kept as an example.
+      const sentence = card.card_type === 'write_sentence' ? (result.sentence ?? undefined) : undefined
+      await answerCard(card.id, rating, result.correct, responseMs.current, sentence)
       if (result.correct) setCorrectCount((n) => n + 1)
       setResult(null)
       setIndex((i) => i + 1)
