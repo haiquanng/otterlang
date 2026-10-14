@@ -6,6 +6,7 @@ import { SessionGate } from '@/components/SessionGate'
 import { AddPage } from '@/pages/AddPage'
 import { DocumentPage } from '@/pages/DocumentPage'
 import { DocumentsPage } from '@/pages/DocumentsPage'
+import { ItemPage } from '@/pages/ItemPage'
 import { LibraryPage } from '@/pages/LibraryPage'
 import { PickWordsPage } from '@/pages/PickWordsPage'
 import { SettingsPage } from '@/pages/SettingsPage'
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
             children: [
               { index: true, element: <TodayPage /> },
               { path: 'library', element: <LibraryPage /> },
+              { path: 'library/:id', element: <ItemPage /> },
               { path: 'add', element: <AddPage /> },
               { path: 'documents', element: <DocumentsPage /> },
               { path: 'documents/:id', element: <DocumentPage /> },

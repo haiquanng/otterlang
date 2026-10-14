@@ -1,16 +1,17 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useState } from 'react'
 import { en } from '@/i18n/en'
-import { listCandidates, markKnown, markKnownBulk, unmarkKnown } from '@/lib/api'
-import type { Candidate } from '@/lib/schemas'
+import { createItem, deleteItem, listCandidates, markKnown, markKnownBulk, unmarkKnown } from '@/lib/api'
+import type { Candidate, Tag } from '@/lib/schemas'
 
 export type Toast = { id: number; message: string; undo: () => void }
 
 /**
- * Candidate list with optimistic Known / Skip and a single-level undo.
+ * Candidate list with optimistic Save / Known / Skip and a single-level undo.
  * Skips are local only: the word comes back next time, as the PRD describes.
  */
 export function usePickWords(sourceId: string) {
+  const queryClient = useQueryClient()
   const query = useQuery({
     queryKey: ['candidates', sourceId],
     queryFn: () => listCandidates(sourceId),
@@ -59,6 +60,30 @@ export function usePickWords(sourceId: string) {
     show(en.pick.skipped(candidate.surface), () => unhide([candidate.lemma]))
   }
 
+  function save(candidate: Candidate, tag: Tag) {
+    const lemmas = [candidate.lemma]
+    hide(lemmas)
+    setError(false)
+    createItem({
+      term: candidate.lemma,
+      surface: candidate.surface,
+      sentence: candidate.sentence,
+      source_id: sourceId,
+      tags: [tag],
+    })
+      .then((item) => {
+        void queryClient.invalidateQueries({ queryKey: ['items'] })
+        show(en.pick.savedWord(candidate.lemma), () => {
+          unhide(lemmas)
+          void deleteItem(item.id).then(() => queryClient.invalidateQueries({ queryKey: ['items'] }))
+        })
+      })
+      .catch(() => {
+        unhide(lemmas)
+        setError(true)
+      })
+  }
+
   function knowTheRest() {
     const lemmas = remaining.map((c) => c.lemma)
     if (lemmas.length === 0) return
@@ -84,6 +109,7 @@ export function usePickWords(sourceId: string) {
     toast,
     dismissToast,
     error,
+    save,
     known,
     skip,
     knowTheRest,

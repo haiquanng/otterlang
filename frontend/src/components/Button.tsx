@@ -21,7 +21,7 @@ export function Button({ variant = 'primary', loading = false, disabled, classNa
       disabled={disabled || loading}
       aria-busy={loading || undefined}
       className={[
-        'inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold transition',
+        'inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-xl px-4 text-sm font-semibold transition',
         'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-river',
         'disabled:cursor-not-allowed disabled:opacity-60',
         variants[variant],

@@ -9,11 +9,13 @@ import { UndoToast } from '@/components/UndoToast'
 import { usePickWords } from '@/hooks/usePickWords'
 import { en } from '@/i18n/en'
 import { getSource } from '@/lib/api'
+import { tagForKind } from '@/lib/tags'
 
 export function PickWordsPage() {
   const { id = '' } = useParams()
   const source = useQuery({ queryKey: ['sources', id], queryFn: () => getSource(id) })
   const pick = usePickWords(id)
+  const tag = tagForKind(source.data?.kind ?? 'other')
 
   return (
     <>
@@ -69,6 +71,7 @@ export function PickWordsPage() {
             <li key={candidate.lemma}>
               <CandidateRow
                 candidate={candidate}
+                onSave={() => pick.save(candidate, tag)}
                 onKnown={() => pick.known(candidate)}
                 onSkip={() => pick.skip(candidate)}
               />
