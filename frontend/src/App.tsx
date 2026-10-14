@@ -7,6 +7,7 @@ import { AddPage } from '@/pages/AddPage'
 import { DocumentPage } from '@/pages/DocumentPage'
 import { DocumentsPage } from '@/pages/DocumentsPage'
 import { LibraryPage } from '@/pages/LibraryPage'
+import { PickWordsPage } from '@/pages/PickWordsPage'
 import { SettingsPage } from '@/pages/SettingsPage'
 import { SignInPage } from '@/pages/SignInPage'
 import { TodayPage } from '@/pages/TodayPage'
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
               { path: 'add', element: <AddPage /> },
               { path: 'documents', element: <DocumentsPage /> },
               { path: 'documents/:id', element: <DocumentPage /> },
+              { path: 'documents/:id/words', element: <PickWordsPage /> },
               { path: 'settings', element: <SettingsPage /> },
             ],
           },

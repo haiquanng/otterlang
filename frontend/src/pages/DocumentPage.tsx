@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, ExternalLink, Trash2 } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Sparkles, Trash2 } from 'lucide-react'
 import { Link, useNavigate, useParams } from 'react-router'
 import { Button } from '@/components/Button'
 import { ErrorState } from '@/components/ErrorState'
@@ -68,6 +68,13 @@ export function DocumentPage() {
             </a>
           ) : null}
         </div>
+        <Link
+          to={`/documents/${source.id}/words`}
+          className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-xl bg-river px-4 text-sm font-semibold text-white shadow-sm hover:opacity-90"
+        >
+          <Sparkles className="size-4" aria-hidden />
+          {en.documents.pickWords}
+        </Link>
       </header>
 
       <div className="max-w-[68ch] whitespace-pre-wrap font-reading text-[17px] leading-[1.75] md:text-lg">{source.body}</div>

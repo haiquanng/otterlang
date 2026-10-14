@@ -22,7 +22,8 @@ export function AddPage() {
     mutationFn: () => createSource({ title: title.trim(), kind, url: url.trim(), body }),
     onSuccess: async (source) => {
       await queryClient.invalidateQueries({ queryKey: ['sources'] })
-      navigate(`/documents/${source.id}`)
+      // Straight to picking words: that is why the user pasted the text.
+      navigate(`/documents/${source.id}/words`)
     },
   })
 
