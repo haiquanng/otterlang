@@ -1,5 +1,25 @@
 export const en = {
   appName: 'OtterLang',
+  common: {
+    retry: 'Try again',
+  },
+  session: {
+    waking: 'Waking up the server. The first visit after a break can take up to a minute.',
+    unreachable: "Can't reach the server right now. It may still be waking up.",
+  },
+  signIn: {
+    title: 'Welcome back',
+    subtitle: 'Sign in to keep learning.',
+    email: 'Email',
+    password: 'Password',
+    submit: 'Sign in',
+    submitting: 'Signing in…',
+    wrongCredentials: 'Wrong email or password.',
+    tooManyAttempts: 'Too many attempts. Wait a few minutes and try again.',
+    invalidEmail: 'That email address does not look right.',
+    genericError: 'Something went wrong. Please try again.',
+    inviteOnly: 'OtterLang is invite-only for now.',
+  },
   nav: {
     today: 'Today',
     library: 'Library',
@@ -25,6 +45,8 @@ export const en = {
   },
   settings: {
     title: 'Settings',
+    account: 'Your account',
+    signOut: 'Sign out',
     server: 'Server',
     serverOnline: 'Online',
     serverWaking: 'Waking up…',
