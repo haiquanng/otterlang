@@ -56,7 +56,7 @@ Source of truth: `db/migrations/`. Every user-owned table carries `user_id` (inc
 - `item_contexts(id, user_id, item_id, source_id, sentence, surface)`: `surface` is the exact form in the sentence (e.g. "Invalidating" for lemma "invalidate"), used to blank it out on cloze cards. Unique `(item_id, sentence)`.
 - `item_tags(user_id, item_id, tag)`
 - `known_words(user_id, lemma)`
-- `cards(id, user_id, item_id, card_type, due, stability, difficulty, state, reps, lapses, last_review)`; unique `(item_id, card_type)`
+- `cards(id, user_id, item_id, card_type, due, stability, difficulty, state, step, reps, lapses, last_review)`; unique `(item_id, card_type)`. Scheduling uses the `fsrs` library (py-fsrs 6); `step` is its learning-step index, null in the review state.
 - `review_logs(id, user_id, card_id, rating, correct, response_ms, reviewed_at)`
 
 Authorization is enforced in the backend. RLS is enabled with no policies on every table only to close Supabase's auto-generated REST API; the backend connects as the owner role and is not affected.
