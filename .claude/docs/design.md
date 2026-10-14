@@ -14,8 +14,9 @@ Calm, focused, warm. A study desk, not a game. Reading long English text must be
 - Surfaces: `paper` (page), `surface` (cards, sidebar), `line` (borders)
 - Text: `ink`, `muted`
 - Accents: `river` (primary actions, active state), `otter` (warm highlights, saved words), soft variants for backgrounds
+- Text on a `river` background uses `on-river` (white in light, near-black in dark), never `text-white`.
 - `danger` for destructive actions and errors
-- Light by default, dark follows the OS. Components use tokens only, so a theme switch later only redefines variables.
+- Theme: Light / Dark / System in Settings, saved per device. `<html data-theme>` holds an explicit choice; without it the OS decides. An inline script in `index.html` applies it before first paint. Components use tokens only.
 
 ## Interaction rules
 - Tap targets at least 44px (`min-h-11`).

@@ -19,7 +19,7 @@ export function BottomTabs() {
               }
             >
               {primary ? (
-                <span className="flex size-11 items-center justify-center rounded-full bg-river text-white shadow-sm">
+                <span className="flex size-11 items-center justify-center rounded-full bg-river text-on-river shadow-sm">
                   <Icon className="size-6" aria-hidden />
                 </span>
               ) : (
