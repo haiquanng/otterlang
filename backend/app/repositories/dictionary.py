@@ -8,7 +8,7 @@ from app.services.dictionary_parsers import DictionaryEntry
 def get_by_lemma(conn: Connection[DictRow], lemma: str) -> DictRow | None:
     # Prefer a row that has a definition over a cached miss for the same lemma.
     return conn.execute(
-        "select id, definition_en from dictionary_entries where lemma = %s "
+        "select id, definition_en, phonetic, pos from dictionary_entries where lemma = %s "
         "order by (definition_en is null), id limit 1",
         (lemma,),
     ).fetchone()
@@ -23,7 +23,7 @@ def upsert(
         "values (%s, %s, %s, %s, %s, %s) "
         "on conflict (lemma, pos) do update set definition_en = excluded.definition_en, "
         "phonetic = excluded.phonetic, examples = excluded.examples, updated_at = now() "
-        "returning id, definition_en",
+        "returning id, definition_en, phonetic, pos",
         (
             lemma,
             entry.pos if entry else "",

@@ -9,6 +9,15 @@ def lemmas_for_user(conn: Connection[DictRow], user_id: UUID) -> set[str]:
     return {row["lemma"] for row in rows}
 
 
+def active_word_ids(conn: Connection[DictRow], user_id: UUID) -> dict[str, UUID]:
+    """Lemma to item id for the learner's active single-word items."""
+    rows = conn.execute(
+        "select lemma, id from items where user_id = %s and type = 'word' and status = 'active'",
+        (user_id,),
+    ).fetchall()
+    return {row["lemma"]: row["id"] for row in rows}
+
+
 def find(conn: Connection[DictRow], user_id: UUID, item_type: str, lemma: str) -> UUID | None:
     row = conn.execute(
         "select id from items where user_id = %s and type = %s::item_type and lemma = %s",
