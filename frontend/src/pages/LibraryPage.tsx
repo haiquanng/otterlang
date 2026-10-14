@@ -58,6 +58,7 @@ export function LibraryPage() {
           ) : (
             <EmptyState
               icon={BookOpen}
+              animation="books"
               title={en.library.emptyTitle}
               body={en.library.emptyBody}
               action={{ to: '/add', label: en.library.emptyAction }}
