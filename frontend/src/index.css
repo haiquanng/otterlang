@@ -10,17 +10,18 @@
  */
 :root {
   color-scheme: light;
-  --color-paper: #fbf8f3;
+  /* Contrast targets are enforced by src/lib/contrast.test.ts. */
+  --color-paper: #f3eee5;
   --color-surface: #ffffff;
-  --color-ink: #1f2328;
-  --color-muted: #6b6f76;
-  --color-line: #ece6dc;
-  --color-river: #0e7c7b;
-  --color-river-soft: #e3f2f1;
+  --color-ink: #111418;
+  --color-muted: #454a52;
+  --color-line: #d6cbb8;
+  --color-river: #09625f;
+  --color-river-soft: #d8ebe8;
   --color-on-river: #ffffff;
-  --color-otter: #8b5e3c;
-  --color-otter-soft: #f3e6d6;
-  --color-danger: #b42318;
+  --color-otter: #6e4526;
+  --color-otter-soft: #efdfc9;
+  --color-danger: #a3200f;
 }
 
 :root[data-theme='dark'] {

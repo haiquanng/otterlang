@@ -3,7 +3,7 @@ import { applyThemeChoice, readThemeChoice, resolveTheme } from '@/lib/theme'
 
 describe('theme', () => {
   beforeEach(() => {
-    document.head.innerHTML = '<meta name="theme-color" content="#fbf8f3" />'
+    document.head.innerHTML = '<meta name="theme-color" content="#f3eee5" />'
   })
   afterEach(() => {
     localStorage.clear()
