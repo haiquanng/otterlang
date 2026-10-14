@@ -78,8 +78,11 @@ export function TodayPage() {
             </div>
           </div>
 
-          {/* A new learner needs something to read before anything else makes sense. */}
-          {query.data.recent_documents.length === 0 ? <StarterLibrary limit={4} /> : null}
+          {/* Always suggest unread starter texts; it hides itself once all are opened. */}
+          <StarterLibrary
+            limit={4}
+            title={query.data.recent_documents.length === 0 ? en.starter.sectionTitle : en.starter.moreToRead}
+          />
         </div>
       )}
     </>

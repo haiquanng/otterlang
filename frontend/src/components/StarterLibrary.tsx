@@ -8,25 +8,30 @@ import { listLibraryDocuments } from '@/lib/libraryApi'
 import { sourceKinds, type SourceKind } from '@/lib/schemas'
 
 type Props = {
-  /** Show only the first few, with a link to the full library (used on Today and Documents). */
+  /**
+   * Preview mode (Today, Documents): only texts the learner has not opened yet, a few at a
+   * time, with a link to the full library. Hidden entirely once everything is opened.
+   */
   limit?: number
+  title?: string
 }
 
 const filterKinds = sourceKinds.filter((kind) => kind !== 'other')
 
-export function StarterLibrary({ limit }: Props) {
+export function StarterLibrary({ limit, title = en.starter.sectionTitle }: Props) {
   const [kind, setKind] = useState<SourceKind | undefined>()
   const query = useQuery({ queryKey: ['library-documents', kind ?? 'all'], queryFn: () => listLibraryDocuments(kind) })
-  // In preview mode, texts the learner has not opened yet come first.
-  const docs = (query.data ?? [])
-    .toSorted((a, b) => (limit ? Number(a.source_id !== null) - Number(b.source_id !== null) : 0))
-    .slice(0, limit)
+  const all = query.data ?? []
+  // Opened texts already live in Documents; a preview only suggests new ones.
+  const docs = limit ? all.filter((doc) => doc.source_id === null).slice(0, limit) : all
+
+  if (limit && query.isSuccess && docs.length === 0) return null
 
   return (
     <section>
       {limit ? (
         <div className="mb-3 flex items-baseline justify-between">
-          <h2 className="font-semibold">{en.starter.sectionTitle}</h2>
+          <h2 className="font-semibold">{title}</h2>
           <Link to="/starter" className="text-sm font-medium text-river hover:underline">
             {en.starter.browseAll}
           </Link>

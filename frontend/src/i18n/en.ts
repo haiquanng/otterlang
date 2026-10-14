@@ -150,6 +150,7 @@ export const en = {
     title: 'Starter library',
     body: 'Ready-made texts on technical and IELTS topics. Open one and pick the words you want to learn.',
     sectionTitle: 'Start with a ready-made text',
+    moreToRead: 'More to read',
     browseAll: 'Browse all',
     read: 'Read & pick words',
     open: 'Open',

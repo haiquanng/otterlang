@@ -38,3 +38,23 @@ test('the full library filters by type and shows Open for texts already added', 
   await page.goto('/starter')
   await expect(page.getByRole('link', { name: 'Open' })).toHaveCount(1)
 })
+
+test('after opening one text the rest stay reachable from Documents and Today', async ({ page }) => {
+  await mockApi(page, { signedIn: true })
+  const sources = await mockSources(page)
+  await mockLibrary(page, sources)
+  await mockWords(page)
+
+  await page.goto('/starter')
+  await page.getByRole('button', { name: 'Read & pick words: Idempotence' }).click()
+  await expect(page.getByRole('heading', { name: 'Pick words to learn' })).toBeVisible()
+
+  await page.goto('/documents')
+  await expect(page.getByRole('link', { name: /Idempotence/ })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'More to read' })).toBeVisible()
+  // Suggestions only list texts not opened yet.
+  await expect(page.getByRole('button', { name: 'Read & pick words: Idempotence' })).toHaveCount(0)
+  await expect(page.getByRole('button', { name: 'Read & pick words: Coral reef' })).toBeVisible()
+  await page.getByRole('link', { name: 'Starter library' }).click()
+  await expect(page.getByRole('heading', { name: 'Starter library' })).toBeVisible()
+})
