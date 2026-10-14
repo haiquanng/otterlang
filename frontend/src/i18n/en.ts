@@ -70,6 +70,7 @@ export const en = {
     library: 'Library',
     add: 'Add',
     documents: 'Documents',
+    starter: 'Starter library',
     settings: 'Settings',
   },
   today: {
@@ -155,7 +156,7 @@ export const en = {
     sectionTitle: 'Start with a ready-made text',
     moreToRead: 'More to read',
     browseAll: 'Browse all',
-    read: 'Read & pick words',
+    read: 'Read',
     open: 'Open',
     adding: 'Adding…',
     addError: "Couldn't add that text. Try again.",
@@ -205,10 +206,5 @@ export const en = {
     themeLight: 'Light',
     themeDark: 'Dark',
     themeSystem: 'System',
-    server: 'Server',
-    serverOnline: 'Online',
-    serverWaking: 'Waking up…',
-    serverWakingHint: 'The free server sleeps when idle. The first request can take up to a minute.',
-    serverDown: 'Unreachable',
   },
 } as const
