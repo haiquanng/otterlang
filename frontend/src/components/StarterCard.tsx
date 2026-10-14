@@ -18,7 +18,8 @@ export function StarterCard({ doc }: { doc: LibraryDocument }) {
       await Promise.all(
         ['sources', 'library-documents', 'today'].map((key) => queryClient.invalidateQueries({ queryKey: [key] })),
       )
-      navigate(`/documents/${source_id}/words`)
+      // Read first; the reading view has the Pick words button.
+      navigate(`/documents/${source_id}`)
     },
   })
 
