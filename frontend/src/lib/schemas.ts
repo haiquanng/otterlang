@@ -14,8 +14,6 @@ export const tokenSchema = z.object({
   user: userSchema,
 })
 
-export const healthSchema = z.object({ status: z.literal('ok') })
-
 export const sourceKinds = ['tech_blog', 'ielts', 'other'] as const
 export const sourceKindSchema = z.enum(sourceKinds)
 export type SourceKind = z.infer<typeof sourceKindSchema>
