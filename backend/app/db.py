@@ -21,9 +21,16 @@ def create_pool(database_url: str) -> Pool:
     )
 
 
-def get_conn(request: Request) -> Iterator[Connection[DictRow]]:
-    """One transaction per request: commits on success, rolls back on error."""
+def get_pool(request: Request) -> Pool:
     pool: Pool = request.app.state.pool
+    return pool
+
+
+PoolDep = Annotated[Pool, Depends(get_pool)]
+
+
+def get_conn(pool: PoolDep) -> Iterator[Connection[DictRow]]:
+    """One transaction per request: commits on success, rolls back on error."""
     with pool.connection() as conn:
         yield conn
 
