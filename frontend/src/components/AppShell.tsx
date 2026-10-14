@@ -6,8 +6,9 @@ export function AppShell() {
   return (
     <div className="min-h-dvh md:flex">
       <Sidebar />
-      <main className="flex-1 px-4 pt-6 pb-28 md:px-10 md:pt-10 md:pb-10">
-        <div className="mx-auto w-full max-w-3xl">
+      <main className="min-w-0 flex-1 px-4 pt-6 pb-28 md:px-8 md:pt-10 md:pb-10 xl:px-12">
+        {/* Wide enough for grids on desktop; pages that hold prose narrow themselves. */}
+        <div className="mx-auto w-full max-w-6xl">
           <Outlet />
         </div>
       </main>

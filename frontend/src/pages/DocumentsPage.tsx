@@ -33,7 +33,7 @@ export function DocumentsPage() {
           <StarterLibrary limit={4} />
         </div>
       ) : (
-        <ul className="space-y-3">
+        <ul className="grid gap-3 lg:grid-cols-2">
           {query.data.map((source) => (
             <li key={source.id}>
               <DocumentCard source={source} />

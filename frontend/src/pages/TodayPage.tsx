@@ -41,40 +41,45 @@ export function TodayPage() {
         <ErrorState onRetry={() => void query.refetch()} />
       ) : (
         <div className="space-y-8">
-          <TodayHero today={query.data} />
+          {/* Desktop: the next action on the left, what you are reading on the right. */}
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+            <div className="space-y-6">
+              <TodayHero today={query.data} />
+              {query.data.total_words > 0 ? (
+                <div className="grid grid-cols-2 gap-3">
+                  <Stat label={en.today.totalWords} value={query.data.total_words} />
+                  <Stat label={en.today.newThisWeek} value={query.data.new_this_week} />
+                </div>
+              ) : null}
+            </div>
+
+            <div className="space-y-6">
+              <section>
+                <h2 className="mb-2 text-sm font-medium text-muted">{en.today.quickAdd}</h2>
+                <QuickAdd />
+              </section>
+              {query.data.recent_documents.length > 0 ? (
+                <section>
+                  <div className="mb-2 flex items-baseline justify-between">
+                    <h2 className="text-sm font-medium text-muted">{en.today.recent}</h2>
+                    <Link to="/documents" className="text-sm font-medium text-river hover:underline">
+                      {en.today.allDocuments}
+                    </Link>
+                  </div>
+                  <ul className="space-y-2">
+                    {query.data.recent_documents.map((source) => (
+                      <li key={source.id}>
+                        <DocumentCard source={source} />
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ) : null}
+            </div>
+          </div>
 
           {/* A new learner needs something to read before anything else makes sense. */}
           {query.data.recent_documents.length === 0 ? <StarterLibrary limit={4} /> : null}
-
-          {query.data.total_words > 0 ? (
-            <div className="grid grid-cols-2 gap-3">
-              <Stat label={en.today.totalWords} value={query.data.total_words} />
-              <Stat label={en.today.newThisWeek} value={query.data.new_this_week} />
-            </div>
-          ) : null}
-
-          <section>
-            <h2 className="mb-2 text-sm font-medium text-muted">{en.today.quickAdd}</h2>
-            <QuickAdd />
-          </section>
-
-          {query.data.recent_documents.length > 0 ? (
-            <section>
-              <div className="mb-2 flex items-baseline justify-between">
-                <h2 className="text-sm font-medium text-muted">{en.today.recent}</h2>
-                <Link to="/documents" className="text-sm font-medium text-river hover:underline">
-                  {en.today.allDocuments}
-                </Link>
-              </div>
-              <ul className="space-y-2">
-                {query.data.recent_documents.map((source) => (
-                  <li key={source.id}>
-                    <DocumentCard source={source} />
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ) : null}
         </div>
       )}
     </>
