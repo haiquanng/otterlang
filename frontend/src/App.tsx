@@ -4,6 +4,7 @@ import { AppShell } from '@/components/AppShell'
 import { RequireAuth } from '@/components/RequireAuth'
 import { SessionGate } from '@/components/SessionGate'
 import { AddPage } from '@/pages/AddPage'
+import { DocumentPage } from '@/pages/DocumentPage'
 import { DocumentsPage } from '@/pages/DocumentsPage'
 import { LibraryPage } from '@/pages/LibraryPage'
 import { SettingsPage } from '@/pages/SettingsPage'
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
               { path: 'library', element: <LibraryPage /> },
               { path: 'add', element: <AddPage /> },
               { path: 'documents', element: <DocumentsPage /> },
+              { path: 'documents/:id', element: <DocumentPage /> },
               { path: 'settings', element: <SettingsPage /> },
             ],
           },
