@@ -14,7 +14,10 @@ export function QuickAdd() {
     onSuccess: async (item) => {
       setTerm('')
       setLastAdded(item.term)
-      await queryClient.invalidateQueries({ queryKey: ['items'] })
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['items'] }),
+        queryClient.invalidateQueries({ queryKey: ['today'] }),
+      ])
     },
   })
 

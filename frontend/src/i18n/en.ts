@@ -74,7 +74,22 @@ export const en = {
   },
   today: {
     title: 'Today',
-    body: 'Cards due for review and your latest documents will show up here.',
+    greeting: (part: 'morning' | 'afternoon' | 'evening', name: string | null) =>
+      `Good ${part}${name ? `, ${name}` : ''}`,
+    dueTitle: (n: number) => `${n} ${n === 1 ? 'card' : 'cards'} to review`,
+    dueBody: 'A few minutes now keeps them from slipping away.',
+    startReview: 'Start review',
+    caughtUpTitle: 'All caught up',
+    caughtUpBody: 'Nothing is due right now. Read something new or add a word.',
+    laterToday: (n: number) => `${n} more due later today`,
+    welcomeTitle: 'Let’s find your first words',
+    welcomeBody: 'Paste a tech blog post or an IELTS passage, then pick the words you want to learn.',
+    welcomeAction: 'Add a document',
+    totalWords: 'Words in your library',
+    newThisWeek: 'Added this week',
+    quickAdd: 'Quick add',
+    recent: 'Recent documents',
+    allDocuments: 'All documents',
   },
   tags: {
     technical: 'Technical',
