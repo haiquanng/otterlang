@@ -95,3 +95,7 @@
 body {
   @apply bg-paper text-ink font-sans antialiased;
 }
+
+button {
+  cursor: pointer;
+}
