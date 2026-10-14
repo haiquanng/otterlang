@@ -9,7 +9,7 @@ export function Sidebar() {
   return (
     <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col gap-1 border-r border-line bg-surface px-3 py-6 md:flex">
       <div className="mb-6 flex items-center gap-2 px-3">
-        <img src="/favicon.svg" alt="" className="size-8" />
+        <img src="/logo.png" alt="" className="size-8" />
         <span className="text-lg font-semibold tracking-tight">{en.appName}</span>
       </div>
       {primaryItems.map(({ to, label, icon: Icon }) => (

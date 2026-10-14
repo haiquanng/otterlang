@@ -12,7 +12,7 @@ export function SplashScreen({ failed, onRetry }: Props) {
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-4 px-6 text-center">
-      <img src="/favicon.svg" alt="" className={`size-16 ${failed ? '' : 'animate-pulse'}`} />
+      <img src="/logo.png" alt="" className={`size-16 ${failed ? '' : 'animate-pulse'}`} />
       {failed ? (
         <>
           <p className="max-w-xs text-muted">{en.session.unreachable}</p>

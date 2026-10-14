@@ -51,7 +51,7 @@ export function SignInPage() {
       <div aria-hidden className="pointer-events-none absolute -top-32 left-1/2 size-[36rem] -translate-x-1/2 rounded-full bg-river-soft blur-3xl" />
       <div className="relative w-full max-w-sm">
         <div className="mb-8 flex flex-col items-center text-center">
-          <img src="/favicon.svg" alt="" className="mb-4 size-14" />
+          <img src="/logo.png" alt="" className="mb-4 size-14" />
           <h1 className="text-2xl font-semibold tracking-tight">{en.signIn.title}</h1>
           <p className="mt-1 text-muted">{en.signIn.subtitle}</p>
         </div>

@@ -9,7 +9,7 @@ export function RouteError() {
 
   return (
     <main className="flex min-h-dvh flex-col items-center justify-center gap-4 px-6 text-center">
-      <img src="/favicon.svg" alt="" className="size-14" />
+      <img src="/logo.png" alt="" className="size-14" />
       <h1 className="text-2xl font-semibold tracking-tight">
         {notFound ? en.errors.notFoundTitle : en.errors.crashTitle}
       </h1>
