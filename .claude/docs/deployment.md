@@ -56,9 +56,11 @@ Your service was created by hand, so set **Build Command** to
 
 ## 7. Daily reminders (Web Push)
 1. On your machine: `cd backend && .venv/bin/python -m scripts.generate_vapid_keys`. Use a separate pair for production.
-2. Render → otterlang-api → Environment: add `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` (`mailto:` your email) and `REMINDER_SECRET` (any long random string).
+2. Render → otterlang-api → Environment: add `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` (only the value after `=`), `VAPID_SUBJECT` (`mailto:` your email; a bare email is accepted) and `REMINDER_SECRET` (any long random string).
 3. cron-job.org → new job: **POST** `https://otterlang-api.onrender.com/push/run`, every hour at minute 0, request header `X-Reminder-Secret: <REMINDER_SECRET>`.
 4. In the app: Settings → Daily reminder → on. iPhone: add the app to the Home Screen first (Share → Add to Home Screen), then open it from there; iOS only allows notifications for installed web apps.
+
+If Settings → Send a test says the server is misconfigured, `/push/test` answers 503 naming the bad setting.
 
 Notifications need the service worker, which runs in the production build (Vercel, or `npm run build && npm run preview` locally), not in `npm run dev`.
 
