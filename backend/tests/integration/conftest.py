@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 from app.config import Settings, get_settings
 from app.db import Pool, create_pool, get_pool
 from app.main import app
-from app.routers import auth
+from app.routers import auth, push
 from app.services.dictionary import (
     DictionaryEntry,
     DictionaryUnavailableError,
@@ -71,7 +71,13 @@ def dictionary() -> FakeDictionary:
 def client(pool: Pool, settings: Settings, dictionary: FakeDictionary) -> Iterator[TestClient]:
     with pool.connection() as conn:
         conn.execute("truncate users, dictionary_entries cascade")
-    for limiter in (auth.login_limiter_ip, auth.login_limiter_email, auth.signup_limiter_ip):
+    limiters = (
+        auth.login_limiter_ip,
+        auth.login_limiter_email,
+        auth.signup_limiter_ip,
+        push.test_limiter,
+    )
+    for limiter in limiters:
         limiter.clear()
 
     app.dependency_overrides[get_pool] = lambda: pool
