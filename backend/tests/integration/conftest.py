@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 from app.config import Settings, get_settings
 from app.db import Pool, create_pool, get_pool
 from app.main import app
-from app.routers import auth, push
+from app.routers import ai, auth, push
 from app.services.dictionary import (
     DictionaryEntry,
     DictionaryUnavailableError,
@@ -76,6 +76,8 @@ def client(pool: Pool, settings: Settings, dictionary: FakeDictionary) -> Iterat
         auth.login_limiter_email,
         auth.signup_limiter_ip,
         push.test_limiter,
+        ai.user_limiter,
+        ai.ip_limiter,
     )
     for limiter in limiters:
         limiter.clear()

@@ -46,7 +46,7 @@ Crawling enriches the shared database at the start: dictionary entries, sample d
 | Cloze | Source sentence with the word hidden, type it | Match, allow lemma variants |
 | Define to word | English definition shown, type the word | Match |
 | Word in use | Pick the sentence using the word correctly | Multiple choice, for collocations |
-| Write sentence | Write a sentence with the word; first due 3 days after saving | Checks: uses a form of the word, at least 5 words, capital start, end punctuation; then self-rated. The sentence is kept as an example. AI feedback optional, later |
+| Write sentence | Write a sentence with the word; first due 3 days after saving | Checks: uses a form of the word, at least 5 words, capital start, end punctuation; then self-rated. The sentence is kept as an example. Optional AI feedback below the checks: word used correctly, a more natural version, one tip |
 
 ## 8. Data model
 Source of truth: `db/migrations/`. Every user-owned table carries `user_id` (including child tables) so each query filters directly.
@@ -62,6 +62,7 @@ Source of truth: `db/migrations/`. Every user-owned table carries `user_id` (inc
 - `known_words(user_id, lemma)`
 - `cards(id, user_id, item_id, card_type, due, stability, difficulty, state, step, reps, lapses, last_review)`; unique `(item_id, card_type)`. Scheduling uses the `fsrs` library (py-fsrs 6); `step` is its learning-step index, null in the review state.
 - `review_logs(id, user_id, card_id, rating, correct, response_ms, reviewed_at)`
+- `ai_feedback(id, user_id, lemma, sentence_hash, feedback jsonb, created_at)`: AI feedback on a written sentence, unique `(user_id, lemma, sentence_hash)`; it is the cache and, by `created_at`, the daily usage count
 - `library_documents(id, title, kind, url unique, body, source_name, license, word_count, created_at)` shared, owner-curated; `sources.library_document_id` remembers which library text a user copied (unique per user).
 
 Authorization is enforced in the backend. RLS is enabled with no policies on every table only to close Supabase's auto-generated REST API; the backend connects as the owner role and is not affected.
@@ -73,13 +74,14 @@ Authorization is enforced in the backend. RLS is enabled with no policies on eve
 - `POST /known-words`, `POST /known-words/bulk`
 - `GET /review/due`, `POST /review/{card_id}/answer`
 - `GET /today`, `GET /me`, `PATCH /me`
-- `POST /ai/feedback` (optional, rate limited)
+- `POST /ai/feedback` `{card_id, sentence}` (optional): 404 when AI is off, 429 over the per-user limits (10 a minute, `AI_DAILY_LIMIT` new sentences a day, cache hits free), 503 when the provider fails or times out
 - `GET /health`
 
 ## 10. Operations
 - Daily reminders: cron-job.org calls `POST /push/run` hourly with the `X-Reminder-Secret` header. Learners whose local reminder hour has passed today, who have cards due and were not reminded today, get one Web Push notification per device. Expired subscriptions (404/410) are deleted. A reminder only counts as sent when at least one device accepted it; if all fail, the status is logged and the next hourly run retries. Settings has "Send a test" (`POST /push/test`, 5 per 10 minutes), which re-registers the device and sends one notification right away. Needs `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT`, `REMINDER_SECRET`.
 - Frontend on Vercel (root directory `frontend/`).
 - FastAPI on Render free (`render.yaml`), cron pings `/health` about every 10 minutes. Frontend shows a waking-up state on cold start.
+- AI: `AI_ENABLED`, `GEMINI_API_KEY`, `GEMINI_MODEL` (default `gemini-3.5-flash-lite`), `AI_DAILY_LIMIT` (default 30). One function (`app/services/ai.py`) calls Gemini with a JSON schema and an 8s timeout.
 - No local file writes (ephemeral filesystem).
 - Supabase Postgres via the pooler connection string.
 
