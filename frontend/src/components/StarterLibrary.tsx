@@ -53,7 +53,7 @@ export function StarterLibrary({ limit, title = en.starter.sectionTitle }: Props
       )}
 
       {query.isPending ? (
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-busy>
+        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-busy>
           {[0, 1, 2].map((i) => (
             <li key={i} className="h-40 animate-pulse rounded-2xl bg-surface" />
           ))}
@@ -63,7 +63,7 @@ export function StarterLibrary({ limit, title = en.starter.sectionTitle }: Props
       ) : docs.length === 0 ? (
         <p className="py-6 text-muted">{en.starter.empty}</p>
       ) : (
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {docs.map((doc) => (
             <li key={doc.id}>
               <StarterCard doc={doc} />

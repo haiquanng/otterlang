@@ -65,7 +65,7 @@ export function LibraryPage() {
             />
           )
         ) : (
-          <ul className="grid gap-2 lg:grid-cols-2 xl:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-2 lg:grid-cols-2 xl:grid-cols-3">
             {query.data.map((item) => (
               <li key={item.id}>
                 <ItemCard item={item} />
