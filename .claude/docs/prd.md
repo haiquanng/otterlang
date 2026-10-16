@@ -25,7 +25,7 @@ Out: grammar curriculum, IELTS mock tests, pronunciation scoring, chat tutor, fu
 ## 4. Seeding (owner only)
 Crawling enriches the shared database at the start: dictionary entries, sample documents. It is a CLI script in `backend/scripts/`, run by the owner. No admin UI until it is needed. End users never trigger a crawl.
 
-**Starter library:** `scripts/seed_library.py` imports the list in `scripts/seed_library.json` into the shared `library_documents` table: Wikipedia articles through the official API (CC BY-SA, attribution stored) for technical and IELTS-style topics, plus any URL through `trafilatura` under the SSRF rules. Copyrighted material (IELTS books, paid blogs) is not imported for redistribution. A learner adds a library text to their own documents with one tap; it is a copy, so they can edit or delete it freely. New accounts see the library on Today and in empty Documents.
+**Starter library:** `scripts/seed_library.py` imports the list in `scripts/seed_library.json` into the shared `library_documents` table: Wikipedia articles through the official API (CC BY-SA, attribution stored) for technical and IELTS-style topics, plus any URL through `trafilatura` under the SSRF rules. Open-licensed journalism comes first because encyclopedia text proved dry: The Conversation (CC BY-ND 4.0, license stored per entry) for AI/ML, medicine and IELTS-style topics. Copyrighted material (IELTS books, paid blogs) is not imported for redistribution. A learner adds a library text to their own documents with one tap; it is a copy, so they can edit or delete it freely. New accounts see the library on Today and in empty Documents.
 
 ## 5. Main flow
 1. Add document (paste text).
