@@ -81,7 +81,7 @@ Authorization is enforced in the backend. RLS is enabled with no policies on eve
 - `GET /health`
 
 ## 10. Operations
-- Daily reminders: cron-job.org calls `POST /push/run` hourly with the `X-Reminder-Secret` header. Learners whose local reminder hour has passed today, who have cards due and were not reminded today, get one Web Push notification per device. Expired subscriptions (404/410) are deleted. Needs `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT`, `REMINDER_SECRET`.
+- Daily reminders: cron-job.org calls `POST /push/run` hourly with the `X-Reminder-Secret` header. Learners whose local reminder hour has passed today, who have cards due and were not reminded today, get one Web Push notification per device. Expired subscriptions (404/410) are deleted. A reminder only counts as sent when at least one device accepted it; if all fail, the status is logged and the next hourly run retries. Settings has "Send a test" (`POST /push/test`, 5 per 10 minutes), which re-registers the device and sends one notification right away. Needs `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT`, `REMINDER_SECRET`.
 - Frontend on Vercel (root directory `frontend/`).
 - FastAPI on Render free (`render.yaml`), cron pings `/health` about every 10 minutes. Frontend shows a waking-up state on cold start.
 - No local file writes (ephemeral filesystem).
