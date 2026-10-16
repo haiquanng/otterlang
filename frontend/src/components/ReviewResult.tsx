@@ -1,4 +1,5 @@
 import { CircleAlert, CircleCheck, CircleX } from 'lucide-react'
+import { AiFeedback } from '@/components/AiFeedback'
 import { HighlightedSentence } from '@/components/HighlightedSentence'
 import { RatingButtons } from '@/components/RatingButtons'
 import { WordLookup } from '@/components/WordLookup'
@@ -12,9 +13,10 @@ type Props = {
   onRate: (rating: Rating) => void
   /** Writing card: the sentence is the learner's own, and feedback is advice, not right/wrong. */
   writing?: boolean
+  cardId: string
 }
 
-export function ReviewResult({ result, saving, onRate, writing = false }: Props) {
+export function ReviewResult({ result, saving, onRate, writing = false, cardId }: Props) {
   const advice = feedbackMessages(result.issues)
   const [Icon, label, tone] = result.correct
     ? [CircleCheck, writing ? en.review.goodSentence : en.review.correct, 'bg-river-soft text-river']
@@ -50,6 +52,7 @@ export function ReviewResult({ result, saving, onRate, writing = false }: Props)
           ))}
         </ul>
       ) : null}
+      {writing && result.sentence ? <AiFeedback cardId={cardId} sentence={result.sentence} /> : null}
       <WordLookup term={result.expected} />
       <RatingButtons suggested={result.suggested_rating as Rating} disabled={saving} onRate={onRate} />
     </div>

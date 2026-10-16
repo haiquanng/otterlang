@@ -33,5 +33,8 @@ services:
         sync: false
       - key: REMINDER_SECRET
         generateValue: true
+      # AI also needs GEMINI_API_KEY; without it the app runs with AI off.
       - key: AI_ENABLED
-        value: "false"
+        value: "true"
+      - key: GEMINI_API_KEY
+        sync: false
