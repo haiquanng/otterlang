@@ -42,7 +42,8 @@ def main() -> None:
             try:
                 if "url" in entry:
                     title, body = fetch_url(entry["url"])
-                    url, source, license_name = entry["url"], entry.get("source", ""), None
+                    url, source = entry["url"], entry.get("source", "")
+                    license_name = entry.get("license")
                     title = entry.get("title") or title
                 else:
                     title, url, body = fetch_wikipedia(entry["title"])

@@ -1,31 +1,278 @@
 {
   "wikipedia": [
-    { "title": "Cache invalidation", "kind": "tech_blog" },
-    { "title": "Idempotence", "kind": "tech_blog" },
-    { "title": "Load balancing (computing)", "kind": "tech_blog" },
-    { "title": "Microservices", "kind": "tech_blog" },
-    { "title": "REST", "kind": "tech_blog" },
-    { "title": "Continuous integration", "kind": "tech_blog" },
-    { "title": "Technical debt", "kind": "tech_blog" },
-    { "title": "Code review", "kind": "tech_blog" },
-    { "title": "Database index", "kind": "tech_blog" },
-    { "title": "Eventual consistency", "kind": "tech_blog" },
-    { "title": "Rate limiting", "kind": "tech_blog" },
-    { "title": "Unit testing", "kind": "tech_blog" },
-    { "title": "Software design pattern", "kind": "tech_blog" },
-    { "title": "Garbage collection (computer science)", "kind": "tech_blog" },
-    { "title": "Public-key cryptography", "kind": "tech_blog" },
-    { "title": "Urban agriculture", "kind": "ielts" },
-    { "title": "Renewable energy", "kind": "ielts" },
-    { "title": "Coral reef", "kind": "ielts" },
-    { "title": "Plastic pollution", "kind": "ielts" },
-    { "title": "Remote work", "kind": "ielts" },
-    { "title": "Urbanization", "kind": "ielts" },
-    { "title": "Deforestation", "kind": "ielts" },
-    { "title": "Placebo", "kind": "ielts" },
-    { "title": "Western honey bee", "kind": "ielts" },
-    { "title": "Multilingualism", "kind": "ielts" },
-    { "title": "Sleep deprivation", "kind": "ielts" }
+    {
+      "title": "Cache invalidation",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Idempotence",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Load balancing (computing)",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Microservices",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "REST",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Continuous integration",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Technical debt",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Code review",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Database index",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Eventual consistency",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Rate limiting",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Unit testing",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Software design pattern",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Garbage collection (computer science)",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Public-key cryptography",
+      "kind": "tech_blog"
+    },
+    {
+      "title": "Urban agriculture",
+      "kind": "ielts"
+    },
+    {
+      "title": "Renewable energy",
+      "kind": "ielts"
+    },
+    {
+      "title": "Coral reef",
+      "kind": "ielts"
+    },
+    {
+      "title": "Plastic pollution",
+      "kind": "ielts"
+    },
+    {
+      "title": "Remote work",
+      "kind": "ielts"
+    },
+    {
+      "title": "Urbanization",
+      "kind": "ielts"
+    },
+    {
+      "title": "Deforestation",
+      "kind": "ielts"
+    },
+    {
+      "title": "Placebo",
+      "kind": "ielts"
+    },
+    {
+      "title": "Western honey bee",
+      "kind": "ielts"
+    },
+    {
+      "title": "Multilingualism",
+      "kind": "ielts"
+    },
+    {
+      "title": "Sleep deprivation",
+      "kind": "ielts"
+    }
   ],
-  "urls": []
+  "urls": [
+    {
+      "url": "https://theconversation.com/ai-behaves-more-like-a-brain-than-a-database-cognitive-sciences-role-in-its-origin-story-helps-explain-why-287838",
+      "kind": "tech_blog",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/as-ai-takes-on-more-tasks-what-happens-when-people-have-to-jump-in-to-clean-up-after-it-292340",
+      "kind": "tech_blog",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/ai-is-transforming-health-care-but-not-everyone-will-share-the-benefits-285578",
+      "kind": "tech_blog",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/a-new-golden-age-of-mathematics-may-be-dawning-thanks-to-ai-and-human-ingenuity-287346",
+      "kind": "tech_blog",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/how-do-computers-talk-with-voices-that-sound-like-people-285903",
+      "kind": "tech_blog",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/ai-doesnt-see-the-way-that-you-do-and-that-could-be-a-problem-when-it-categorizes-objects-and-scenes-271481",
+      "kind": "tech_blog",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/ai-can-help-with-academic-research-but-doesnt-always-get-it-right-here-are-some-tips-to-check-the-information-you-receive-292865",
+      "kind": "tech_blog",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/how-an-openai-safety-test-became-a-real-world-cyberattack-on-the-hugging-face-platform-288334",
+      "kind": "tech_blog",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/companies-that-get-hacked-face-stricter-laws-than-firms-unleashing-rogue-ai-we-can-fix-that-294059",
+      "kind": "tech_blog",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/kids-and-teens-are-going-to-ai-chatbots-for-advice-how-can-parents-make-sure-this-is-safe-294145",
+      "kind": "tech_blog",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/from-jargon-to-impact-teaching-undergraduates-the-art-of-public-communication-293752",
+      "kind": "tech_blog",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/how-bionic-eyes-are-becoming-a-reality-290270",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/does-your-sleep-tracker-get-it-right-a-pittsburgh-neuroscientist-weighs-in-291936",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/good-gut-bacteria-vs-bad-what-we-learnt-about-antibiotic-resistance-from-a-community-in-nairobi-289108",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/how-mrna-and-dna-vaccines-could-soon-treat-cancers-hiv-autoimmune-disorders-and-genetic-diseases-170772",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/three-new-ebola-vaccines-are-being-developed-an-infectious-disease-expert-explains-284290",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/you-can-dream-while-youre-awake-the-boundary-between-wakefulness-and-sleep-is-a-lot-blurrier-than-youd-think-284899",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/photographic-memory-is-a-myth-heres-what-research-really-says-about-remembering-278160",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/african-genomics-research-is-growing-what-countries-are-doing-to-connect-genetic-data-and-healthcare-292717",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/cities-are-sinking-but-citywide-averages-hide-the-real-problem-294213",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/hoping-for-a-new-normal-climate-is-pointless-we-must-learn-to-adapt-292221",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/pisa-2025-rankings-are-we-asking-the-right-questions-about-schooling-291712",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/what-happens-to-your-brain-in-nature-the-neuroscience-explained-277332",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/introduced-species-arent-good-or-bad-but-when-they-slip-from-our-control-we-are-quick-to-condemn-them-287306",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/what-is-umami-293748",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/at-an-old-steel-site-in-pittsburgh-bacteria-evolved-to-survive-and-eat-industrial-pollution-289264",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/we-asked-teachers-about-their-experiences-with-ai-in-the-classroom-heres-what-they-said-265241",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    },
+    {
+      "url": "https://theconversation.com/what-can-free-living-indian-street-dogs-teach-us-about-how-to-care-for-pet-dogs-293553",
+      "kind": "ielts",
+      "source": "The Conversation",
+      "license": "CC BY-ND 4.0"
+    }
+  ]
 }
