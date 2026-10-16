@@ -4,12 +4,32 @@ export function canSpeak(): boolean {
   return typeof window !== 'undefined' && 'speechSynthesis' in window
 }
 
+// One sound at a time across the page: the sentence read aloud or a recording of the learner.
+let playing: HTMLAudioElement | null = null
+
+export function stopSound(): void {
+  if (canSpeak()) window.speechSynthesis.cancel()
+  playing?.pause()
+  playing = null
+}
+
 export function speak(text: string, rate = 1): void {
+  stopSound()
   const utterance = new SpeechSynthesisUtterance(text)
   utterance.lang = 'en-US'
   utterance.rate = rate
-  window.speechSynthesis.cancel()
   window.speechSynthesis.speak(utterance)
+}
+
+export function playRecording(url: string): void {
+  stopSound()
+  const audio = new Audio(url)
+  audio.onended = () => {
+    if (playing === audio) playing = null
+  }
+  playing = audio
+  // A rejected play() (e.g. autoplay rules) just means silence; nothing to recover.
+  audio.play().catch(() => undefined)
 }
 
 export function canRecord(): boolean {
