@@ -13,7 +13,9 @@ const buttonClass =
 export function ShadowCard({ item }: { item: PracticeSentence }) {
   const recorder = useShadowRecorder()
   const recording = recorder.status === 'recording'
-  const words = recorder.transcript !== null ? matchWords(item.sentence, recorder.transcript) : null
+  // Graded only after Stop: a pause mid-sentence must not score a half-read sentence.
+  const words =
+    recorder.status === 'done' && recorder.transcript !== null ? matchWords(item.sentence, recorder.transcript) : null
   const message = recording
     ? en.speak.recordingHint
     : recorder.status === 'denied'
