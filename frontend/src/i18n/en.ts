@@ -276,6 +276,7 @@ export const en = {
     reminderUnsupported: 'This browser does not support notifications.',
     reminderDenied: 'Notifications are blocked. Allow them for this site in your browser settings, then try again.',
     reminderNotConfigured: 'Reminders are not set up on the server yet.',
+    reminderMisconfigured: 'Notifications are misconfigured on the server (VAPID settings). The owner needs to fix them.',
     reminderNeedsApp: 'Reminders work in the installed or deployed app, not in the dev server.',
     reminderTest: 'Send a test',
     reminderTestSent: 'Sent. It should arrive in a few seconds.',

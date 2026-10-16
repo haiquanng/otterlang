@@ -18,6 +18,7 @@ const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 function problem(error: unknown): string {
   if (error instanceof NoServiceWorkerError) return en.settings.reminderNeedsApp
   if (error instanceof ApiError && error.status === 404) return en.settings.reminderNotConfigured
+  if (error instanceof ApiError && error.status === 503) return en.settings.reminderMisconfigured
   if (error instanceof Error && error.message === 'denied') return en.settings.reminderDenied
   return en.common.loadError
 }

@@ -2,7 +2,7 @@ from functools import lru_cache
 from typing import Annotated, Literal
 
 from fastapi import Depends
-from pydantic import Field
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -32,6 +32,15 @@ class Settings(BaseSettings):
     gemini_model: str = "gemini-3.5-flash-lite"
     # New sentences sent to the AI per learner in 24 hours; cached answers are free.
     ai_daily_limit: int = 30
+
+    @field_validator("vapid_subject")
+    @classmethod
+    def _subject_as_link(cls, value: str) -> str:
+        # Push services require a mailto: or https: link; a bare email is an easy slip.
+        value = value.strip()
+        if "@" in value and not value.startswith(("mailto:", "https://")):
+            return f"mailto:{value}"
+        return value
 
     @property
     def cors_origin_list(self) -> list[str]:

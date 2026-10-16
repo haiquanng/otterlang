@@ -7,6 +7,7 @@ from app.config import Settings
 from app.db import Pool
 from app.main import app
 from app.services.push_sender import SendResult, get_sender
+from scripts.generate_vapid_keys import _b64url
 from tests.integration.helpers import signup
 
 SECRET = "reminder-secret-for-tests"
@@ -26,7 +27,7 @@ class FakeSender:
 @pytest.fixture
 def sender(client: TestClient, settings: Settings) -> Iterator[FakeSender]:
     settings.vapid_public_key = "public-key"
-    settings.vapid_private_key = "private-key"
+    settings.vapid_private_key = _b64url(bytes(range(1, 33)))
     settings.reminder_secret = SECRET
     fake = FakeSender()
     app.dependency_overrides[get_sender] = lambda: fake
@@ -135,3 +136,14 @@ def test_test_notification_goes_to_own_devices_now(client: TestClient, sender: F
     assert response.json() == {"sent": 1, "expired": 0, "failed": 0}
     assert sender.sent == [(SUB["endpoint"], "Reminders work on this device.")]
     assert client.post("/push/test").status_code == 401
+
+
+def test_misconfigured_vapid_answers_503_with_the_setting(
+    client: TestClient, sender: FakeSender, settings: Settings
+) -> None:
+    auth = signup(client)
+    settings.vapid_private_key = "VAPID_PRIVATE_KEY=oops"
+    response = client.post("/push/test", headers=auth)
+    assert response.status_code == 503
+    assert "VAPID_PRIVATE_KEY" in response.json()["detail"]
+    assert client.post("/push/run", headers={"X-Reminder-Secret": SECRET}).status_code == 503

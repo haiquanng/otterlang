@@ -12,7 +12,7 @@ from app.db import Conn
 from app.deps import CurrentUser
 from app.rate_limit import RateLimiter
 from app.repositories import push, review, users
-from app.services.push_sender import Send, get_sender
+from app.services.push_sender import Send, get_sender, vapid_problem
 from app.services.reminders import reminder_day, reminder_message, test_message
 
 log = logging.getLogger(__name__)
@@ -69,6 +69,11 @@ def _send_to_devices(conn: Conn, user_id: UUID, message: dict[str, str], send: S
 def _require_push(settings: Settings) -> None:
     if not settings.vapid_public_key or not settings.vapid_private_key:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Reminders are not set up on this server")
+    problem = vapid_problem(settings)
+    if problem:
+        raise HTTPException(
+            status.HTTP_503_SERVICE_UNAVAILABLE, f"Push is misconfigured: {problem}"
+        )
 
 
 @router.get("/public-key")
