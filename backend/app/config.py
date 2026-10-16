@@ -29,6 +29,9 @@ class Settings(BaseSettings):
     reminder_secret: str | None = None
     ai_enabled: bool = False
     gemini_api_key: str | None = None
+    gemini_model: str = "gemini-3.5-flash-lite"
+    # New sentences sent to the AI per learner in 24 hours; cached answers are free.
+    ai_daily_limit: int = 30
 
     @property
     def cors_origin_list(self) -> list[str]:

@@ -55,7 +55,7 @@ export function ReviewPage() {
             </Button>
           </div>
         ) : session.card && session.result && (session.phase === 'result' || session.phase === 'saving') ? (
-          <ReviewResult result={session.result} saving={session.phase === 'saving'} onRate={(r) => void session.rate(r)} writing={session.card.card_type === 'write_sentence'} />
+          <ReviewResult result={session.result} saving={session.phase === 'saving'} onRate={(r) => void session.rate(r)} writing={session.card.card_type === 'write_sentence'} cardId={session.card.id} />
         ) : session.card ? (
           session.card.card_type === 'write_sentence' ? (
             <WritePrompt key={session.card.id} card={session.card} busy={session.phase === 'checking'} onShown={session.startTimer} onCheck={(a) => void session.check(a)} />
