@@ -61,3 +61,11 @@ export async function unsubscribeThisDevice(): Promise<void> {
   })
   await subscription.unsubscribe()
 }
+
+const testResultSchema = z.object({ sent: z.number(), expired: z.number(), failed: z.number() })
+
+/** Re-registers this device first, so the test also repairs a subscription the server lost. */
+export async function sendTestNotification(): Promise<z.infer<typeof testResultSchema>> {
+  await subscribeThisDevice()
+  return request('/push/test', testResultSchema, { method: 'POST' })
+}

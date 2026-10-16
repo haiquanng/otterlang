@@ -26,3 +26,7 @@ def reminder_message(due: int) -> dict[str, str]:
         "body": f"{due} {cards} waiting. A few minutes keeps them fresh.",
         "url": "/review",
     }
+
+
+def test_message() -> dict[str, str]:
+    return {"title": "OtterLang", "body": "Reminders work on this device.", "url": "/"}
