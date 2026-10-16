@@ -19,6 +19,7 @@ from app.routers import (
     reading,
     review,
     sources,
+    speaking,
     today,
 )
 
@@ -55,6 +56,7 @@ def create_app() -> FastAPI:
     app.include_router(push.router)
     app.include_router(reading.router)
     app.include_router(review.router)
+    app.include_router(speaking.router)
     app.include_router(today.router)
     return app
 

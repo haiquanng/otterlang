@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { Mic } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { DailyProgress } from '@/components/DailyProgress'
@@ -54,6 +55,18 @@ export function TodayPage() {
                     <Stat label={en.today.mastered} value={query.data.mastered_words} />
                     <Stat label={en.today.newThisWeek} value={query.data.new_this_week} />
                   </div>
+                  <Link
+                    to="/speak"
+                    className="flex items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 hover:bg-paper focus-visible:outline-2 focus-visible:outline-river"
+                  >
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-river-soft text-river">
+                      <Mic className="size-5" aria-hidden />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block font-medium">{en.today.speakTitle}</span>
+                      <span className="block text-sm text-muted">{en.today.speakBody}</span>
+                    </span>
+                  </Link>
                 </>
               ) : null}
             </div>
