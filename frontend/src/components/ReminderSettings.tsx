@@ -3,7 +3,13 @@ import { BellRing } from 'lucide-react'
 import { useState } from 'react'
 import { en } from '@/i18n/en'
 import { ApiError, getMe, updateMe, type MeUpdate } from '@/lib/api'
-import { currentPushSupport, NoServiceWorkerError, subscribeThisDevice, unsubscribeThisDevice } from '@/lib/push'
+import {
+  currentPushSupport,
+  NoServiceWorkerError,
+  sendTestNotification,
+  subscribeThisDevice,
+  unsubscribeThisDevice,
+} from '@/lib/push'
 
 const HOURS = Array.from({ length: 24 }, (_, hour) => hour)
 const hourLabel = new Intl.DateTimeFormat(undefined, { hour: 'numeric', timeZone: 'UTC' })
@@ -36,6 +42,7 @@ export function ReminderSettings() {
     },
   })
   const setHour = useMutation({ mutationFn: (hour: number) => save({ reminder_hour: hour, timezone }) })
+  const test = useMutation({ mutationFn: sendTestNotification })
   const enabled = me.data?.reminder_enabled ?? false
 
   return (
@@ -82,6 +89,24 @@ export function ReminderSettings() {
       </div>
       {support === 'install-first' ? <p className="mt-2 text-sm text-muted">{en.settings.reminderInstallFirst}</p> : null}
       {support === 'unsupported' ? <p className="mt-2 text-sm text-muted">{en.settings.reminderUnsupported}</p> : null}
+      {support === 'supported' && enabled ? (
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            disabled={test.isPending}
+            onClick={() => test.mutate()}
+            className="min-h-10 rounded-lg border border-line px-3 text-sm font-medium disabled:opacity-60"
+          >
+            {en.settings.reminderTest}
+          </button>
+          {test.isSuccess ? (
+            <p role="status" className="text-sm text-muted">
+              {test.data.sent > 0 ? en.settings.reminderTestSent : en.settings.reminderTestFailed}
+            </p>
+          ) : null}
+          {test.isError ? <p role="alert" className="text-sm text-danger">{problem(test.error)}</p> : null}
+        </div>
+      ) : null}
       {toggle.isError ? <p role="alert" className="mt-2 text-sm text-danger">{problem(toggle.error)}</p> : null}
     </section>
   )
