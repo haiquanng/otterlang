@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { recognitionConstructor, transcriptOf, type Recognition } from '@/lib/speech'
+import { recognitionConstructor, stopSound, transcriptOf, type Recognition } from '@/lib/speech'
 
 type Status = 'idle' | 'recording' | 'done' | 'denied' | 'error'
 
@@ -24,6 +24,8 @@ export function useShadowRecorder() {
   }, [audioUrl])
 
   async function start() {
+    // Otherwise the microphone records the app's own playback.
+    stopSound()
     setTranscript(null)
     setRecognitionFailed(false)
     let stream: MediaStream

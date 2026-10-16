@@ -3,7 +3,7 @@ import { HighlightedSentence } from '@/components/HighlightedSentence'
 import { useShadowRecorder } from '@/hooks/useShadowRecorder'
 import { en } from '@/i18n/en'
 import type { PracticeSentence } from '@/lib/speakingApi'
-import { canRecord, canSpeak, speak } from '@/lib/speech'
+import { canRecord, canSpeak, playRecording, speak } from '@/lib/speech'
 import { heardShare, matchWords } from '@/lib/speechMatch'
 
 const buttonClass =
@@ -69,7 +69,7 @@ export function ShadowCard({ item }: { item: PracticeSentence }) {
           </button>
         ) : null}
         {recorder.audioUrl && !recording ? (
-          <button type="button" className={buttonClass} onClick={() => void new Audio(recorder.audioUrl ?? '').play()}>
+          <button type="button" className={buttonClass} onClick={() => recorder.audioUrl && playRecording(recorder.audioUrl)}>
             <Play className="size-4" aria-hidden />
             {en.speak.playMine}
           </button>
