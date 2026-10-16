@@ -44,7 +44,7 @@ export function TodayPage() {
       ) : (
         <div className="space-y-8">
           {/* Desktop: the next action on the left, what you are reading on the right. */}
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
             <div className="space-y-6">
               <TodayHero today={query.data} />
               {query.data.total_words > 0 ? (
