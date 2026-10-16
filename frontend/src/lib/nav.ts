@@ -1,4 +1,4 @@
-import { BookOpen, BookOpenText, FileText, Plus, Settings, Sun, type LucideIcon } from 'lucide-react'
+import { BookOpen, BookOpenText, FileText, Mic, Plus, Settings, Sun, type LucideIcon } from 'lucide-react'
 import { en } from '@/i18n/en'
 
 export type NavItem = {
@@ -17,5 +17,6 @@ export const navItems: NavItem[] = [
   { to: '/add', label: en.nav.add, icon: Plus, primary: true },
   { to: '/documents', label: en.nav.documents, icon: FileText },
   { to: '/starter', label: en.nav.starter, icon: BookOpenText, desktopOnly: true },
+  { to: '/speak', label: en.nav.speak, icon: Mic, desktopOnly: true },
   { to: '/settings', label: en.nav.settings, icon: Settings },
 ]

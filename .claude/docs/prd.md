@@ -48,6 +48,9 @@ Crawling enriches the shared database at the start: dictionary entries, sample d
 | Word in use | Pick the sentence using the word correctly | Multiple choice, for collocations |
 | Write sentence | Write a sentence with the word; first due 3 days after saving | Checks: uses a form of the word, at least 5 words, capital start, end punctuation; then self-rated. The sentence is kept as an example. Optional AI feedback below the checks: word used correctly, a more natural version, one tip |
 
+## 7a. Speaking practice
+`/speak` (sidebar on desktop, a card on Today): shadowing one sentence at a time. Listen (browser speech synthesis, normal or slower), record yourself (MediaRecorder), play yours back. Where the browser has speech recognition, the sentence is recolored by which words came through (pure `matchWords`, longest common subsequence). Nothing is uploaded or stored; no pronunciation scoring. Later: short presentation phrases.
+
 ## 8. Data model
 Source of truth: `db/migrations/`. Every user-owned table carries `user_id` (including child tables) so each query filters directly.
 
@@ -75,6 +78,7 @@ Authorization is enforced in the backend. RLS is enabled with no policies on eve
 - `GET /review/due`, `POST /review/{card_id}/answer`
 - `GET /today`, `GET /me`, `PATCH /me`
 - `POST /ai/feedback` `{card_id, sentence}` (optional): 404 when AI is off, 429 over the per-user limits (10 a minute, `AI_DAILY_LIMIT` new sentences a day, cache hits free), 503 when the provider fails or times out
+- `GET /speaking/sentences?limit=` practice sentences for shadowing: the learner's own sentences first (newest first), then saved contexts at random; at most 200 characters
 - `GET /health`
 
 ## 10. Operations
