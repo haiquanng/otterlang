@@ -56,9 +56,9 @@ def _run(client: TestClient, secret: str | None = SECRET) -> dict[str, int]:
 
 def test_reminder_is_sent_once_per_day(client: TestClient, sender: FakeSender) -> None:
     _learner_with_a_due_card(client)
-    assert _run(client) == {"reminded": 1, "sent": 1, "expired": 0}
+    assert _run(client) == {"reminded": 1, "sent": 1, "expired": 0, "failed": 0}
     assert sender.sent == [(SUB["endpoint"], "1 card is waiting. A few minutes keeps them fresh.")]
-    assert _run(client) == {"reminded": 0, "sent": 0, "expired": 0}
+    assert _run(client) == {"reminded": 0, "sent": 0, "expired": 0, "failed": 0}
 
 
 def test_expired_subscription_is_removed(
@@ -118,3 +118,20 @@ def test_subscribe_unsubscribe_and_settings(client: TestClient, sender: FakeSend
     )
     assert client.patch("/me", json={"timezone": "Nowhere/Land"}, headers=auth).status_code == 422
     assert client.patch("/me", json={"reminder_hour": 24}, headers=auth).status_code == 422
+
+
+def test_failed_send_is_retried_on_the_next_run(client: TestClient, sender: FakeSender) -> None:
+    _learner_with_a_due_card(client)
+    sender.result = "failed"
+    assert _run(client) == {"reminded": 0, "sent": 0, "expired": 0, "failed": 1}
+    sender.result = "sent"
+    assert _run(client) == {"reminded": 1, "sent": 1, "expired": 0, "failed": 0}
+
+
+def test_test_notification_goes_to_own_devices_now(client: TestClient, sender: FakeSender) -> None:
+    auth = signup(client)
+    client.put("/push/subscription", json=SUB, headers=auth)
+    response = client.post("/push/test", headers=auth)
+    assert response.json() == {"sent": 1, "expired": 0, "failed": 0}
+    assert sender.sent == [(SUB["endpoint"], "Reminders work on this device.")]
+    assert client.post("/push/test").status_code == 401

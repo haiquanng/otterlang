@@ -1,6 +1,7 @@
 """Sending one Web Push message. Swappable in tests; never called without VAPID keys."""
 
 import json
+import logging
 from collections.abc import Callable
 from typing import Literal
 
@@ -12,6 +13,7 @@ SendResult = Literal["sent", "expired", "failed"]
 Send = Callable[[dict[str, object], dict[str, str]], SendResult]
 
 GONE = {404, 410}
+log = logging.getLogger(__name__)
 
 
 def make_sender(settings: Settings) -> Send:
@@ -27,7 +29,11 @@ def make_sender(settings: Settings) -> Send:
         except WebPushException as exc:
             status = getattr(exc.response, "status_code", None)
             # 404/410: the browser dropped this subscription; the caller deletes it.
-            return "expired" if status in GONE else "failed"
+            if status in GONE:
+                return "expired"
+            # Status only: the endpoint and keys identify a device and stay out of logs.
+            log.warning("web push failed with status %s", status)
+            return "failed"
         return "sent"
 
     return send
