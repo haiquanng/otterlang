@@ -36,7 +36,7 @@ export function canRecord(): boolean {
   return typeof navigator !== 'undefined' && !!navigator.mediaDevices?.getUserMedia && typeof MediaRecorder !== 'undefined'
 }
 
-type RecognitionEvent = { results: ArrayLike<ArrayLike<{ transcript: string }>> }
+export type RecognitionEvent = { results: ArrayLike<ArrayLike<{ transcript: string }>> }
 
 /** The part of the Web Speech API we use; TypeScript's DOM types do not include it. */
 export type Recognition = {
@@ -44,7 +44,8 @@ export type Recognition = {
   continuous: boolean
   interimResults: boolean
   onresult: ((event: RecognitionEvent) => void) | null
-  onerror: (() => void) | null
+  onerror: ((event: { error: string }) => void) | null
+  onend: (() => void) | null
   start: () => void
   stop: () => void
   abort: () => void

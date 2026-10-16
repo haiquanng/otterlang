@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { recognitionConstructor, stopSound, transcriptOf, type Recognition } from '@/lib/speech'
+import { recognitionConstructor, stopSound } from '@/lib/speech'
+import { startTranscriber, type Transcriber } from '@/lib/transcriber'
 
 type Status = 'idle' | 'recording' | 'done' | 'denied' | 'error'
 
@@ -13,7 +14,7 @@ export function useShadowRecorder() {
   const [transcript, setTranscript] = useState<string | null>(null)
   const [recognitionFailed, setRecognitionFailed] = useState(false)
   const recorder = useRef<MediaRecorder | null>(null)
-  const recognition = useRef<Recognition | null>(null)
+  const recognition = useRef<Transcriber | null>(null)
 
   useEffect(() => () => {
     recorder.current?.stream.getTracks().forEach((track) => track.stop())
@@ -48,19 +49,7 @@ export function useShadowRecorder() {
     setStatus('recording')
 
     const Ctor = recognitionConstructor()
-    if (!Ctor) return
-    const rec = new Ctor()
-    rec.lang = 'en-US'
-    rec.continuous = true
-    rec.interimResults = false
-    rec.onresult = (event) => setTranscript(transcriptOf(event))
-    rec.onerror = () => setRecognitionFailed(true)
-    recognition.current = rec
-    try {
-      rec.start()
-    } catch {
-      setRecognitionFailed(true)
-    }
+    if (Ctor) recognition.current = startTranscriber(Ctor, setTranscript, () => setRecognitionFailed(true))
   }
 
   function stop() {
